@@ -15,14 +15,23 @@ class YoutubeScreen extends StatelessWidget {
         leading:
             Image.asset('images/yt_logo_rgb_dark.png', fit: BoxFit.fitWidth),
         actions: <Widget>[
+          FlatButton(
+            child: Text('戻る', style: TextStyle(color: Colors.white)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           IconButton(
-            icon: Icon(Icons.cast, color: Colors.white),
+            icon: Icon(
+              Icons.cast,
+              color: Colors.white,
+            ),
           ),
           IconButton(
             icon: Icon(Icons.circle_notifications, color: Colors.white),
           ),
           IconButton(
-            icon: Icon(Icons.find_replace_sharp, color: Colors.white),
+            icon: Icon(Icons.search_sharp, color: Colors.white),
           ),
           CircleAvatar(
             backgroundColor: Colors.purple,
@@ -232,66 +241,44 @@ class YoutubeScreen extends StatelessWidget {
           ),
         ],
       ),
-      persistentFooterButtons: <Widget>[
-        FlatButton(
-          onPressed: () {},
-          child: Icon(Icons.add, color: Colors.white),
-        ),
-        FlatButton(
-          onPressed: () {},
-          child: Icon(Icons.add, color: Colors.white),
-        ),
-        FlatButton(
-          onPressed: () {},
-          child: Icon(Icons.add, color: Colors.white),
-        ),
-        FlatButton(
-          onPressed: () {},
-          child: Icon(Icons.add, color: Colors.white),
-        ),
-        FlatButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.add, color: Colors.red),
-        ),
-      ],
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.grey[900],
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.white),
+            title: Text(
+              'ホーム',
+              style: TextStyle(color: Colors.white, fontSize: 8),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.offline_bolt_sharp, color: Colors.white),
+            title: Text(
+              '保留',
+              style: TextStyle(color: Colors.white, fontSize: 8),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add, color: Colors.white),
+            title: Text(''),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.ondemand_video_rounded, color: Colors.white),
+            title: Text(
+              '登録チャンネル',
+              style: TextStyle(color: Colors.white, fontSize: 8),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.library_add_sharp, color: Colors.white),
+            title: Text(
+              'ライブラリ',
+              style: TextStyle(color: Colors.white, fontSize: 8),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
-
-// ヘッダーバーがうまく実装できない
-//１，bottomNavigationBar: BottomNavigationBar()
-//を使用してみたが、３つまでしか表示されない。
-// bottomNavigationBar: BottomNavigationBar(
-//   backgroundColor: Colors.white,
-//   items: const [
-//     BottomNavigationBarItem(
-//       icon: Icon(Icons.add),
-//       title: Text('Home'),
-//     ),
-//     BottomNavigationBarItem(
-//       icon: Icon(Icons.add_shopping_cart),
-//       title: Text('Home'),
-//     ),
-//     BottomNavigationBarItem(
-//       icon: Icon(Icons.add),
-//       title: Text('Home'),
-//     ),
-//   ],
-// ),
-
-//２、FlatButton内にColumnを配置表示しようしたが、
-//MainAxisAlignment.endだと表示内のエリアが消えてしまう。
-// Container(
-//   child: Column(
-//     mainAxisAlignment: MainAxisAlignment.end,
-//     children: [
-//       FlatButton(
-//         onPressed: () {},
-//         child: Icon(Icons.add, color: Colors.white),
-//       ),
-//       Text('ホーム'),
-//     ],
-//   ),
-// ),
