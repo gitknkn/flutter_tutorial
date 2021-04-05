@@ -273,7 +273,7 @@ class YoutubeScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.library_add_sharp, color: Colors.white),
             title: Text(
-              'ライブラリ',
+              'ライブラリー',
               style: TextStyle(color: Colors.white, fontSize: 8),
             ),
           ),
