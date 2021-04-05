@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_demo/screen/home_screen.dart';
+import 'package:youtube_demo/practice1/youtube_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,13 +11,15 @@ class MyApp extends StatelessWidget {
       home: YouTubeDemo(),
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) => YouTubeDemo(),
-        '/screen/home_screen': (BuildContext context) => HomeScreen(),
+        '/practice1/youtube_screen': (BuildContext context) => YoutubeScreen(),
       },
     );
   }
 }
 
 class YouTubeDemo extends StatelessWidget {
+  final double con_margin = 30;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,19 +28,56 @@ class YouTubeDemo extends StatelessWidget {
           title: Text('YouTube Demo'),
           backgroundColor: Colors.black,
         ),
-        body: Container(
-          color: Colors.black,
-          child: Center(
-            child: ElevatedButton(
-              child: Text('一覧画面へ'),
-              style: ElevatedButton.styleFrom(
-                onPrimary: Colors.black,
-                primary: Colors.red[100],
+        body: Scaffold(
+          backgroundColor: Colors.black,
+          body: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.all(con_margin),
+                color: Colors.black,
+                child: Center(
+                  child: ElevatedButton(
+                    child: Text('YouTubeDemo'),
+                    style: ElevatedButton.styleFrom(
+                      onPrimary: Colors.black,
+                      primary: Colors.red[100],
+                    ),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushNamed('/practice1/youtube_screen');
+                    },
+                  ),
+                ),
               ),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/screen/home_screen');
-              },
-            ),
+              Container(
+                margin: EdgeInsets.all(con_margin),
+                color: Colors.black,
+                child: Center(
+                  child: ElevatedButton(
+                    child: Text('予備軍１'),
+                    style: ElevatedButton.styleFrom(
+                      onPrimary: Colors.black,
+                      primary: Colors.red[100],
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(con_margin),
+                color: Colors.black,
+                child: Center(
+                  child: ElevatedButton(
+                    child: Text('予備軍２'),
+                    style: ElevatedButton.styleFrom(
+                      onPrimary: Colors.black,
+                      primary: Colors.red[100],
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
