@@ -14,7 +14,7 @@ class YoutubeScreen extends StatelessWidget {
           backgroundColor: Colors.blueGrey,
           child: Text('Back'),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.pop(context);
           }),
     );
   }
@@ -60,7 +60,7 @@ Widget _createBody(context) {
   Widget _videoMainText(String t) {
     String text = t;
     return Text(
-      '$text',
+      text,
       style: TextStyle(
         color: Colors.white,
         fontSize: 14,
