@@ -113,11 +113,15 @@ class YoutubeScreen extends StatelessWidget {
             SizedBox(width: 12),
             Icon(
               icon,
+              color: Colors.white,
             ),
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(left: 12),
-              child: Text(text),
+              child: Text(
+                text,
+                style: TextStyle(color: Colors.white),
+              ),
               height: 40,
             ),
           ],
@@ -161,8 +165,8 @@ class YoutubeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _movieMainText(moveInfoData.title),
-                        _movieSubText(moveInfoData.subTitle),
+                        _stylingMovieMainText(moveInfoData.title),
+                        _stylingMovieSubText(moveInfoData.subTitle),
                       ],
                     ),
                   ),
@@ -175,7 +179,7 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _movieMainText(String text) {
+  Widget _stylingMovieMainText(String text) {
     return Text(
       text,
       style: TextStyle(
@@ -185,7 +189,7 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _movieSubText(String text) {
+  Widget _stylingMovieSubText(String text) {
     return Text(
       text,
       style: TextStyle(
