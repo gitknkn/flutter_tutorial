@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_demo/screen/home_screen.dart';
+import 'package:youtube_demo/practice1/youtube_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,38 +7,50 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: YouTubeDemo(),
+      home: mainScreen(),
       routes: <String, WidgetBuilder>{
-        '/home': (BuildContext context) => YouTubeDemo(),
-        '/screen/home_screen': (BuildContext context) => HomeScreen(),
+        '/practice1/youtube_screen': (BuildContext context) => YoutubeScreen(),
       },
     );
   }
 }
 
-class YouTubeDemo extends StatelessWidget {
+class mainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('YouTube Demo'),
+          title: Text('Main Screen'),
           backgroundColor: Colors.black,
         ),
-        body: Container(
-          color: Colors.black,
-          child: Center(
-            child: ElevatedButton(
-              child: Text('一覧画面へ'),
-              style: ElevatedButton.styleFrom(
-                onPrimary: Colors.black,
-                primary: Colors.red[100],
+        body: Column(
+          children: [
+            Container(
+              color: Colors.black,
+              child: Center(
+                child: ElevatedButton(
+                  child: Text('YouTube'),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed('/practice1/youtube_screen');
+                  },
+                ),
               ),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/screen/home_screen');
-              },
             ),
-          ),
+            Container(
+              color: Colors.black,
+              child: Center(
+                child: ElevatedButton(
+                  child: Text('Sumo'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('');
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
