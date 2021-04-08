@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_demo/practice1/youtube_screen.dart';
+import 'package:youtube_demo/practice2/sumo-screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
       home: mainScreen(),
       routes: <String, WidgetBuilder>{
         '/practice1/youtube_screen': (BuildContext context) => YoutubeScreen(),
+        '/practice2/sumo-screen': (BuildContext context) => SumoScreen(),
       },
     );
   }
@@ -45,7 +47,7 @@ class mainScreen extends StatelessWidget {
                 child: ElevatedButton(
                   child: Text('Sumo'),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('');
+                    Navigator.of(context).pushNamed('/practice2/sumo-screen');
                   },
                 ),
               ),
