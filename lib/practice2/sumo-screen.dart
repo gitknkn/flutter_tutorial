@@ -193,10 +193,19 @@ class SumoScreen extends StatelessWidget {
 
   Widget _createBottomNavigationBar(context) {
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           title: Text('Home'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          title: Text('お気に入り'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          title: Text('Home2'),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
