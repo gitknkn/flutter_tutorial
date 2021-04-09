@@ -178,6 +178,16 @@ class SumoScreen extends StatelessWidget {
     );
   }
 
+  Widget _createFloatingActionButton(context) {
+    return FloatingActionButton(
+      backgroundColor: Colors.grey.shade300,
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: Text('Back'),
+    );
+  }
+
   Widget _showConditions(IconData icon, String text) {
     return Row(
       children: [
@@ -185,15 +195,6 @@ class SumoScreen extends StatelessWidget {
         SizedBox(width: 4),
         Text(text, style: TextStyle(fontSize: 10))
       ],
-    );
-  }
-
-  Widget _createFloatingActionButton(context) {
-    return FloatingActionButton(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      child: Text('Back'),
     );
   }
 
