@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: mainScreen(),
+      home: MainScreen(),
       routes: <String, WidgetBuilder>{
         '/practice1/youtube_screen': (BuildContext context) => YoutubeScreen(),
         '/practice2/sumo-screen': (BuildContext context) => SumoScreen(),
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class mainScreen extends StatelessWidget {
+class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
