@@ -11,7 +11,6 @@ class YoutubeScreen extends StatelessWidget {
       appBar: _createAppBar(context),
       body: _createBody(context),
       bottomNavigationBar: _createBottomNavigationBar(context),
-      floatingActionButton: createFooter(context),
     );
   }
 
@@ -65,7 +64,7 @@ class YoutubeScreen extends StatelessWidget {
             // Columnで３つのメソッドを返している。(_createMoveCell以外は０の時のみ表示)
             children: [
               _createCategory(context),
-              categoryTitle(),
+              _categoryTitle(),
               _createMoveCell(data),
             ],
           );
@@ -102,16 +101,6 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  FloatingActionButton createFooter(context) {
-    return FloatingActionButton(
-      backgroundColor: Colors.blueGrey,
-      child: Text('Back'),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
-
   Card _createViewCard(
       double haltButtonWidth, IconData icon, String text, Color color) {
     return Card(
@@ -124,11 +113,15 @@ class YoutubeScreen extends StatelessWidget {
             SizedBox(width: 12),
             Icon(
               icon,
+              color: Colors.white,
             ),
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(left: 12),
-              child: Text(text),
+              child: Text(
+                text,
+                style: TextStyle(color: Colors.white),
+              ),
               height: 40,
             ),
           ],
@@ -137,7 +130,7 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget categoryTitle() {
+  Widget _categoryTitle() {
     return Container(
       height: 60,
       alignment: Alignment.centerLeft,
@@ -172,8 +165,8 @@ class YoutubeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _videoMainText(moveInfoData.title),
-                        _videoSubText(moveInfoData.subTitle),
+                        _stylingMovieMainText(moveInfoData.title),
+                        _stylingMovieSubText(moveInfoData.subTitle),
                       ],
                     ),
                   ),
@@ -186,7 +179,7 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _videoMainText(String text) {
+  Widget _stylingMovieMainText(String text) {
     return Text(
       text,
       style: TextStyle(
@@ -196,7 +189,7 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _videoSubText(String text) {
+  Widget _stylingMovieSubText(String text) {
     return Text(
       text,
       style: TextStyle(
@@ -207,12 +200,8 @@ class YoutubeScreen extends StatelessWidget {
   }
 
   BottomNavigationBar _createBottomNavigationBar(context) {
-    TextStyle _BottomNavigationBarItemStyle() {
-      return TextStyle(
-        fontSize: 8,
-        color: Colors.white,
-      );
-    }
+    final bottomNavigationItemLabelStyle =
+        const TextStyle(fontSize: 8, color: Colors.white);
 
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
@@ -222,14 +211,14 @@ class YoutubeScreen extends StatelessWidget {
           icon: Icon(Icons.home, color: Colors.white),
           title: Text(
             'ホーム',
-            style: _BottomNavigationBarItemStyle(),
+            style: bottomNavigationItemLabelStyle,
           ),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.photo_album, color: Colors.white),
           title: Text(
             '検索',
-            style: _BottomNavigationBarItemStyle(),
+            style: bottomNavigationItemLabelStyle,
           ),
         ),
         BottomNavigationBarItem(
@@ -240,14 +229,14 @@ class YoutubeScreen extends StatelessWidget {
           icon: Icon(Icons.chat, color: Colors.white),
           title: Text(
             '登録チャンネル',
-            style: _BottomNavigationBarItemStyle(),
+            style: bottomNavigationItemLabelStyle,
           ),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.chat, color: Colors.white),
           title: Text(
             'ライブラリ',
-            style: _BottomNavigationBarItemStyle(),
+            style: bottomNavigationItemLabelStyle,
           ),
         ),
       ],
