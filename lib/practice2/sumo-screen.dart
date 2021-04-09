@@ -10,6 +10,7 @@ class SumoScreen extends StatelessWidget {
         appBar: _createAppBar(context),
         body: _createBody(context),
         bottomNavigationBar: _createBottomNavigationBar(),
+        floatingActionButton: _createActionButton(context),
       ),
     );
   }
@@ -247,6 +248,29 @@ class SumoScreen extends StatelessWidget {
           label: 'マイページ',
         ),
       ],
+    );
+  }
+
+  Widget _createActionButton(context) {
+    return Container(
+      width: 60,
+      height: 60,
+      child: FittedBox(
+        child: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Colors.green.shade300,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.search),
+              Text(
+                '物件',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
