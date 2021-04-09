@@ -10,7 +10,6 @@ class SumoScreen extends StatelessWidget {
         appBar: _createAppBar(context),
         body: _createBody(context),
         bottomNavigationBar: _createBottomNavigationBar(),
-        floatingActionButton: _createFloatingActionButton(context),
       ),
     );
   }
@@ -62,6 +61,15 @@ class SumoScreen extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          SizedBox(width: 30),
+          IconButton(
+            iconSize: 30,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.green.shade400,
+            icon: Icon(Icons.add_circle_outline),
           ),
         ],
       ),
@@ -242,16 +250,6 @@ class SumoScreen extends StatelessWidget {
     );
   }
 
-  Widget _createFloatingActionButton(context) {
-    return FloatingActionButton(
-      backgroundColor: Colors.grey.shade300,
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      child: Text('Back'),
-    );
-  }
-
   Widget _showConditions(IconData icon, String text) {
     return Row(
       children: [
@@ -344,11 +342,13 @@ class SumoScreen extends StatelessWidget {
             ),
             label: Text(text1),
             style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-              onPrimary: Colors.grey,
-              side: BorderSide(color: Colors.grey, width: 1),
-            ),
-            onPressed: null,
+                primary: Colors.white,
+                onPrimary: Colors.grey,
+                side: BorderSide(
+                  color: Colors.grey,
+                  width: 1,
+                )),
+            onPressed: () {},
           ),
         ),
         SizedBox(width: 5),
@@ -365,7 +365,7 @@ class SumoScreen extends StatelessWidget {
               onPrimary: Colors.grey,
               side: BorderSide(color: Colors.grey, width: 1),
             ),
-            onPressed: null,
+            onPressed: () {},
           ),
         ),
       ],
