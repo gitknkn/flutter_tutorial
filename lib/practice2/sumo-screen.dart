@@ -130,12 +130,13 @@ class SumoScreen extends StatelessWidget {
                           margin: EdgeInsets.all(10),
                           child: Column(
                             children: [
-                              _showConditions(Icons.directions_transit_outlined,
+                              _buildConditions(
+                                  Icons.directions_transit_outlined,
                                   '東京駅・品川駅・川崎駅・横浜駅・目黒駅・恵比寿駅・渋谷駅'),
                               SizedBox(height: 4),
-                              _showConditions(Icons.add, '下限なし〜2,000万円'),
+                              _buildConditions(Icons.add, '下限なし〜2,000万円'),
                               SizedBox(height: 4),
-                              _showConditions(Icons.request_quote_rounded,
+                              _buildConditions(Icons.request_quote_rounded,
                                   '1R〜4LDK/10㎡以上/徒歩20分'),
                             ],
                           ),
@@ -156,16 +157,16 @@ class SumoScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _showMainImage('images/sumo1.png', 'images/sumo2.png'),
-                  _showMainText('Rising place川崎', '2,000万円'),
-                  _showSubText(
+                  _buildMainImage('images/sumo1.png', 'images/sumo2.png'),
+                  _buildMainText('Rising place川崎', '2,000万円'),
+                  _buildSubText(
                       Icons.directions_transit_outlined, '京急本線 京急川崎駅より徒歩9分'),
                   SizedBox(height: 4),
-                  _showSubText(Icons.add, '1k/21.24 南西向き'),
+                  _buildSubText(Icons.add, '1k/21.24 南西向き'),
                   SizedBox(height: 4),
-                  _showSubText(Icons.request_quote_rounded, '2階/15階建 築5年'),
+                  _buildSubText(Icons.request_quote_rounded, '2階/15階建 築5年'),
                   SizedBox(height: 4),
-                  _choiceActionButton(
+                  _buildActionButton(
                       '興味なし', Icons.delete, 'お気に入り', Icons.favorite_border),
                 ],
               ),
@@ -180,16 +181,16 @@ class SumoScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _showMainImage('images/sumo1.png', 'images/sumo2.png'),
-                  _showMainText('Rising place川崎', '2,000万円'),
-                  _showSubText(
+                  _buildMainImage('images/sumo1.png', 'images/sumo2.png'),
+                  _buildMainText('Rising place川崎', '2,000万円'),
+                  _buildSubText(
                       Icons.directions_transit_outlined, '京急本線 京急川崎駅より徒歩9分'),
                   SizedBox(height: 4),
-                  _showSubText(Icons.add, '1k/21.24 南西向き'),
+                  _buildSubText(Icons.add, '1k/21.24 南西向き'),
                   SizedBox(height: 4),
-                  _showSubText(Icons.request_quote_rounded, '2階/15階建 築5年'),
+                  _buildSubText(Icons.request_quote_rounded, '2階/15階建 築5年'),
                   SizedBox(height: 4),
-                  _choiceActionButton(
+                  _buildActionButton(
                       '興味なし', Icons.delete, 'お気に入り', Icons.favorite_border),
                 ],
               ),
@@ -204,16 +205,16 @@ class SumoScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _showMainImage('images/sumo1.png', 'images/sumo2.png'),
-                  _showMainText('Rising place川崎', '2,000万円'),
-                  _showSubText(
+                  _buildMainImage('images/sumo1.png', 'images/sumo2.png'),
+                  _buildMainText('Rising place川崎', '2,000万円'),
+                  _buildSubText(
                       Icons.directions_transit_outlined, '京急本線 京急川崎駅より徒歩9分'),
                   SizedBox(height: 4),
-                  _showSubText(Icons.add, '1k/21.24 南西向き'),
+                  _buildSubText(Icons.add, '1k/21.24 南西向き'),
                   SizedBox(height: 4),
-                  _showSubText(Icons.request_quote_rounded, '2階/15階建 築5年'),
+                  _buildSubText(Icons.request_quote_rounded, '2階/15階建 築5年'),
                   SizedBox(height: 4),
-                  _choiceActionButton(
+                  _buildActionButton(
                       '興味なし', Icons.delete, 'お気に入り', Icons.favorite_border),
                 ],
               ),
@@ -274,7 +275,7 @@ class SumoScreen extends StatelessWidget {
     );
   }
 
-  Widget _showConditions(IconData icon, String text) {
+  Widget _buildConditions(IconData icon, String text) {
     return Row(
       children: [
         Icon(icon, size: 16),
@@ -284,7 +285,7 @@ class SumoScreen extends StatelessWidget {
     );
   }
 
-  Widget _showMainImage(String image1, String image2) {
+  Widget _buildMainImage(String image1, String image2) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),
@@ -309,7 +310,7 @@ class SumoScreen extends StatelessWidget {
     );
   }
 
-  Widget _showMainText(String mainText, String subTitle) {
+  Widget _buildMainText(String mainText, String subTitle) {
     return Container(
       margin: EdgeInsets.only(left: 20),
       child: Column(
@@ -333,7 +334,7 @@ class SumoScreen extends StatelessWidget {
     );
   }
 
-  Widget _showSubText(IconData icon, String text) {
+  Widget _buildSubText(IconData icon, String text) {
     return Container(
       margin: EdgeInsets.only(left: 20),
       child: Row(
@@ -352,7 +353,7 @@ class SumoScreen extends StatelessWidget {
     );
   }
 
-  Widget _choiceActionButton(
+  Widget _buildActionButton(
       String text1, IconData icon1, String text2, IconData icon2) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -396,7 +397,7 @@ class SumoScreen extends StatelessWidget {
     );
   }
 
-  List<HouseData> _houseDataList() {
+  List<HouseData> _createHouseDataList() {
     return [
       HouseData(
         'images/sumo1.png',
