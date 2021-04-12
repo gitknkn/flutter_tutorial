@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youtube_demo/async/async_screen.dart';
 import 'package:youtube_demo/practice1/youtube_screen.dart';
 import 'package:youtube_demo/practice2/sumo-screen.dart';
 
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
       home: MainScreen(),
       routes: <String, WidgetBuilder>{
         '/practice1/youtube_screen': (BuildContext context) => YoutubeScreen(),
+        '/async/async_screen': (context) => AsyncScreen(),
         '/practice2/sumo-screen': (BuildContext context) => SumoScreen(),
       },
     );
@@ -28,6 +30,7 @@ class MainScreen extends StatelessWidget {
           backgroundColor: Colors.black,
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               color: Colors.black,
@@ -48,6 +51,17 @@ class MainScreen extends StatelessWidget {
                   child: Text('Sumo'),
                   onPressed: () {
                     Navigator.of(context).pushNamed('/practice2/sumo-screen');
+                  },
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.black,
+              child: Center(
+                child: ElevatedButton(
+                  child: Text('Async'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/async/async_screen');
                   },
                 ),
               ),
