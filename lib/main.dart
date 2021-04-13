@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:youtube_demo/async/async_screen.dart';
 import 'package:youtube_demo/practice1/youtube_screen.dart';
 import 'package:youtube_demo/practice2/sumo-screen.dart';
+import 'package:youtube_demo/practice3/merukari-screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,8 +13,10 @@ class MyApp extends StatelessWidget {
       home: MainScreen(),
       routes: <String, WidgetBuilder>{
         '/practice1/youtube_screen': (BuildContext context) => YoutubeScreen(),
-        '/async/async_screen': (context) => AsyncScreen(),
         '/practice2/sumo-screen': (BuildContext context) => SumoScreen(),
+        '/practice3/merukari-screen': (BuildContext context) =>
+            MerukariScreen(),
+        '/async/async_screen': (context) => AsyncScreen(),
       },
     );
   }
@@ -51,6 +54,18 @@ class MainScreen extends StatelessWidget {
                   child: Text('Sumo'),
                   onPressed: () {
                     Navigator.of(context).pushNamed('/practice2/sumo-screen');
+                  },
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.black,
+              child: Center(
+                child: ElevatedButton(
+                  child: Text('Merukari'),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed('/practice3/merukari-screen');
                   },
                 ),
               ),
