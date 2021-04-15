@@ -48,6 +48,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
     _age = await Prefs.getAge();
     _birthday = await Prefs.getBirthDay();
     setState(() {});
+    // setStateを配置しないと描画されないので、注意
   }
 
   _saveUserData(String name, String age, String birthday) async {
@@ -110,13 +111,13 @@ class _AsyncScreenState extends State<AsyncScreen> {
       onPressed: () {
         showDialog(
           context: context,
-          builder: (_) => _alertDialog(context),
+          builder: (_) => _buildAlertDialog(context),
         ).then((value) => _loadUserData());
       },
     );
   }
 
-  Widget _alertDialog(BuildContext context) {
+  Widget _buildAlertDialog(BuildContext context) {
     _nameController = TextEditingController(text: _name);
     _ageController = TextEditingController(text: _age.toString());
     _birthdayController = TextEditingController(text: _birthday);
