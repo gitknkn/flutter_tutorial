@@ -3,8 +3,16 @@ import 'package:youtube_demo/async/async_screen.dart';
 import 'package:youtube_demo/practice1/youtube_screen.dart';
 import 'package:youtube_demo/practice2/sumo-screen.dart';
 import 'package:youtube_demo/practice3/merukari-screen.dart';
+import 'package:youtube_demo/mvvm/screen/home/home_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -17,6 +25,7 @@ class MyApp extends StatelessWidget {
         '/practice3/merukari-screen': (BuildContext context) =>
             MerukariScreen(),
         '/async/async_screen': (context) => AsyncScreen(),
+        '/mvvm/screen/home/home_screen': (context) => HomeScreen(),
       },
     );
   }
@@ -77,6 +86,18 @@ class MainScreen extends StatelessWidget {
                   child: Text('Async'),
                   onPressed: () {
                     Navigator.of(context).pushNamed('/async/async_screen');
+                  },
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.black,
+              child: Center(
+                child: ElevatedButton(
+                  child: Text('QiitaClient'),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed('/mvvm/screen/home/home_screen');
                   },
                 ),
               ),
