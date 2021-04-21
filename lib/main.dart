@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_demo/async/async_screen.dart';
-import 'package:youtube_demo/practice1/youtube_screen.dart';
+import 'package:youtube_demo/mvvm/screen/home/home_screen.dart';
+import 'package:youtube_demo/practice1/screen/youtube_screen.dart';
 import 'package:youtube_demo/practice2/sumo-screen.dart';
 import 'package:youtube_demo/practice3/merukari-screen.dart';
-import 'package:youtube_demo/mvvm/screen/home/home_screen.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   runApp(
