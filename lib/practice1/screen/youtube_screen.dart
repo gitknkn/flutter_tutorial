@@ -17,7 +17,17 @@ class YoutubeScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: _createAppBar(context),
-      body: _createBody(context, list),
+      body: Stack(
+        children: [
+          state.isReadyData ? _createBody(context, list) : Container(),
+          state.isLoading
+              ? Container(
+                  color: Color.fromARGB(128, 0, 0, 0),
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              : Container(),
+        ],
+      ),
       bottomNavigationBar: _createBottomNavigationBar(context),
     );
   }
@@ -61,11 +71,8 @@ class YoutubeScreen extends ConsumerWidget {
 
   Widget _createBody(
       BuildContext context, List<MovieInfoData> movieInfoDataList) {
-    // final moveList = _createMoveInfoData();
     if (movieInfoDataList == null) {
-      return Container(
-        child: _loadingView(),
-      );
+      return Container();
     }
     return ListView.builder(
       itemCount: movieInfoDataList.length,
@@ -168,7 +175,7 @@ class YoutubeScreen extends ConsumerWidget {
               Row(
                 children: [
                   Icon(
-                    Icons.cast,
+                    Icons.adb_sharp,
                     color: Colors.white,
                   ),
                   Container(
@@ -211,52 +218,34 @@ class YoutubeScreen extends ConsumerWidget {
   }
 
   BottomNavigationBar _createBottomNavigationBar(context) {
-    final bottomNavigationItemLabelStyle =
-        const TextStyle(fontSize: 8, color: Colors.white);
-
     return BottomNavigationBar(
+      unselectedLabelStyle: TextStyle(fontSize: 8),
+      unselectedItemColor: Colors.white,
+      selectedFontSize: 8,
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.grey[900],
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home, color: Colors.white),
-          title: Text(
-            'ホーム',
-            style: bottomNavigationItemLabelStyle,
-          ),
+          label: 'ホーム',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.photo_album, color: Colors.white),
-          title: Text(
-            '検索',
-            style: bottomNavigationItemLabelStyle,
-          ),
+          label: '検索',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.add, color: Colors.white),
-          title: Text(''),
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.chat, color: Colors.white),
-          title: Text(
-            '登録チャンネル',
-            style: bottomNavigationItemLabelStyle,
-          ),
+          label: '登録チャンネル',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.chat, color: Colors.white),
-          title: Text(
-            'ライブラリ',
-            style: bottomNavigationItemLabelStyle,
-          ),
+          label: 'ライブラリ',
         ),
       ],
-    );
-  }
-
-  Widget _loadingView() {
-    return Center(
-      child: CircularProgressIndicator(),
     );
   }
 }

@@ -6,8 +6,7 @@ import 'package:youtube_demo/practice1/state/youtube_screen_state.dart';
 class YoutubeScreenStateNotifier extends StateNotifier<YoutubeScreenState> {
   YoutubeScreenStateNotifier() : super(YoutubeScreenState()) {
     fetchMovieInfoDataList();
-    // fetchMovieInfoDataList()をフェッチする
-  } // 親クラスのコンストラクターを呼んでいる
+  }
 
   YoutubeRepository _repository = YoutubeRepository();
 
