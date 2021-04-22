@@ -1,6 +1,6 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_demo/mvvm/repository/qiita_repository.dart';
 import 'package:youtube_demo/mvvm/state/home_state.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeStateNotifier extends StateNotifier<HomeState> {
   QiitaRepository _repository = QiitaRepository();
@@ -22,7 +22,10 @@ class HomeStateNotifier extends StateNotifier<HomeState> {
           qiitaItems: qiitaItems);
     } else {
       state = state.copyWith(
-          isLoading: false, isReadyData: false, qiitaItems: qiitaItems);
+        isLoading: false,
+        isReadyData: false,
+        qiitaItems: qiitaItems,
+      );
     }
   }
 

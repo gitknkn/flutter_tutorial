@@ -2,14 +2,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youtube_demo/practice1/model/movie_info_data.dart';
+import 'package:youtube_demo/practice1/screen/youtube_screen_notifier.dart';
 
-class YoutubeScreen extends StatelessWidget {
+class YoutubeScreen extends ConsumerWidget {
+  final youtubeScreenStateNotifier =
+      StateNotifierProvider((ref) => YoutubeScreenStateNotifier());
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    final state = watch(youtubeScreenStateNotifier.state);
+    final list = state.movieInfoDataList;
+
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: _createAppBar(context),
-      body: _createBody(context),
+      body: Stack(
+        children: [
+          state.isReadyData ? _createBody(context, list) : Container(),
+          state.isLoading
+              ? Container(
+                  color: Color.fromARGB(128, 0, 0, 0),
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              : Container(),
+        ],
+      ),
       bottomNavigationBar: _createBottomNavigationBar(context),
     );
   }
@@ -51,17 +69,17 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _createBody(BuildContext context) {
-    final moveList =
-        _createMoveInfoData(); //_createMoveInfoData配列(List<>)の変数moveListに代入
+  Widget _createBody(
+      BuildContext context, List<MovieInfoData> movieInfoDataList) {
+    if (movieInfoDataList == null) {
+      return Container();
+    }
     return ListView.builder(
-      itemCount: moveList.length, // itemCountに配列の要素を代入して、要素分を表示
+      itemCount: movieInfoDataList.length,
       itemBuilder: (context, index) {
-        final data = moveList[index]; // 作成している変数moveList[要素番号]を変数dataに代入
+        final data = movieInfoDataList[index];
         if (index == 0) {
-          // もし、要素番号が０なら、
           return Column(
-            // Columnで３つのメソッドを返している。(_createMoveCell以外は０の時のみ表示)
             children: [
               _createCategory(context),
               _categoryTitle(),
@@ -69,7 +87,7 @@ class YoutubeScreen extends StatelessWidget {
             ],
           );
         } else {
-          return _createMoveCell(data); // 要素番号が０以外は、_createMoveCell(data)のみ表示
+          return _createMoveCell(data);
         }
       },
     );
@@ -145,7 +163,7 @@ class YoutubeScreen extends StatelessWidget {
     );
   }
 
-  Widget _createMoveCell(MoveInfoData moveInfoData) {
+  Widget _createMoveCell(MovieInfoData moveInfoData) {
     return Column(
       children: [
         Image.asset(moveInfoData.imagePath),
@@ -157,7 +175,7 @@ class YoutubeScreen extends StatelessWidget {
               Row(
                 children: [
                   Icon(
-                    Icons.cast,
+                    Icons.adb_sharp,
                     color: Colors.white,
                   ),
                   Container(
@@ -200,80 +218,34 @@ class YoutubeScreen extends StatelessWidget {
   }
 
   BottomNavigationBar _createBottomNavigationBar(context) {
-    final bottomNavigationItemLabelStyle =
-        const TextStyle(fontSize: 8, color: Colors.white);
-
     return BottomNavigationBar(
+      unselectedLabelStyle: TextStyle(fontSize: 8),
+      unselectedItemColor: Colors.white,
+      selectedFontSize: 8,
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.grey[900],
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home, color: Colors.white),
-          title: Text(
-            'ホーム',
-            style: bottomNavigationItemLabelStyle,
-          ),
+          label: 'ホーム',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.photo_album, color: Colors.white),
-          title: Text(
-            '検索',
-            style: bottomNavigationItemLabelStyle,
-          ),
+          label: '検索',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.add, color: Colors.white),
-          title: Text(''),
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.chat, color: Colors.white),
-          title: Text(
-            '登録チャンネル',
-            style: bottomNavigationItemLabelStyle,
-          ),
+          label: '登録チャンネル',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.chat, color: Colors.white),
-          title: Text(
-            'ライブラリ',
-            style: bottomNavigationItemLabelStyle,
-          ),
+          label: 'ライブラリ',
         ),
       ],
     );
   }
-
-  // ダーミーデーターをリスト配列<MoveInfoData>内でインスタンス化
-  List<MoveInfoData> _createMoveInfoData() {
-    return [
-      MoveInfoData(
-        'images/asia.jpg',
-        'This is ARASHI LIVE 2020. 12. 31\" DigestMovie',
-        'ARASHI ・ 10億回 ・ 67日前',
-      ),
-      MoveInfoData(
-        'images/asia.jpg',
-        'This is ARASHI LIVE 2020. 12. 31\" DigestMovie',
-        'ARASHI ・ 10億回 ・ 67日前',
-      ),
-      MoveInfoData(
-        'images/asia.jpg',
-        'This is ARASHI LIVE 2020. 12. 31\" DigestMovie',
-        'ARASHI ・ 10億回 ・ 67日前',
-      ),
-    ];
-  }
-}
-
-// ダミーデータークラス
-class MoveInfoData {
-  final imagePath;
-  final title;
-  final subTitle;
-
-  MoveInfoData(
-    this.imagePath,
-    this.title,
-    this.subTitle,
-  );
 }
