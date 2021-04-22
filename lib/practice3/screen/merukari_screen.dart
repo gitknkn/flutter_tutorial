@@ -1,14 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:youtube_demo/practice3/model/product_data.dart';
+import 'package:youtube_demo/practice3/screen/merukari_screen_notifier.dart';
 
-class MerukariScreen extends StatelessWidget {
+class MerukariScreen extends ConsumerWidget {
+  final merukariScreenStateNotifier =
+      StateNotifierProvider((ref) => MerukariScreenStateNotifier());
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    final state = watch(merukariScreenStateNotifier.state);
+    final list = state.productDataList;
+
     return MaterialApp(
       home: Scaffold(
         appBar: _createAppBar(context),
-        body: _createBody(context),
+        body: Stack(
+          children: [
+            state.isReading ? _createBody(context, list) : Container(),
+            state.isLoading
+                ? Container(
+                    color: Color.fromARGB(32, 0, 0, 0),
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                : Container(),
+          ],
+        ),
         bottomNavigationBar: _createBottomNavigationBar(context),
         floatingActionButton: _createActionButton(context),
       ),
@@ -28,12 +47,14 @@ class MerukariScreen extends StatelessWidget {
     );
   }
 
-  Widget _createBody(BuildContext context) {
-    final productList = _createProductDataList();
+  Widget _createBody(BuildContext context, List<ProductData> productDataList) {
+    if (productDataList == null) {
+      return Container();
+    }
     return ListView.builder(
-      itemCount: productList.length,
+      itemCount: productDataList.length,
       itemBuilder: (context, index) {
-        final data = productList[index];
+        final data = productDataList[index];
         if (index == 0) {
           return Column(
             children: [
@@ -190,7 +211,7 @@ class MerukariScreen extends StatelessWidget {
 
   Widget _buildProductList(ProductData productData) {
     // 変数 String型のproductPriceにint型のpriceを3桁カンマのフォーマットに代入
-    String productPrice = NumberFormat('#,##0').format(productData.price);
+    final productPrice = NumberFormat('#,##0').format(productData.price);
     return Container(
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -234,22 +255,4 @@ class MerukariScreen extends StatelessWidget {
       ),
     );
   }
-
-  // ProductDataクラスのインスタンスをList配列で3個分保持
-  List<ProductData> _createProductDataList() {
-    return [
-      ProductData('images/nicon.png', 'NiconD5500', 55000, 446),
-      ProductData('images/nicon.png', 'TEST', 50103000, 11),
-      ProductData('images/nicon.png', 'Nicon', 5000, 6),
-    ];
-  }
-}
-
-class ProductData {
-  final image;
-  final name;
-  final price;
-  final favorites;
-
-  ProductData(this.image, this.name, this.price, this.favorites);
 }
