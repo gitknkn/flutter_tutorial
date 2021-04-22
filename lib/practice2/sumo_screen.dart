@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
+import 'package:flutter/material.dart';
 
 class SumoScreen extends StatelessWidget {
   @override
@@ -78,150 +78,22 @@ class SumoScreen extends StatelessWidget {
   }
 
   Widget _createBody(BuildContext context) {
-    return ListView(
-      children: [
-        Column(
-          children: [
-            Container(
-              margin: EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(12),
-                        child: Text(
-                          'カウルのおすすめ',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Container(
-                        child: Text(
-                          '新着3件',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                      SizedBox(width: 120),
-                      Row(
-                        children: [
-                          Text(
-                            '編集',
-                            style: TextStyle(color: Colors.green),
-                          ),
-                          Icon(Icons.brush_outlined, color: Colors.green),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey.shade300,
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              _buildConditions(
-                                  Icons.directions_transit_outlined,
-                                  '東京駅・品川駅・川崎駅・横浜駅・目黒駅・恵比寿駅・渋谷駅'),
-                              SizedBox(height: 4),
-                              _buildConditions(Icons.add, '下限なし〜2,000万円'),
-                              SizedBox(height: 4),
-                              _buildConditions(Icons.request_quote_rounded,
-                                  '1R〜4LDK/10㎡以上/徒歩20分'),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(bottom: 10),
-              margin: EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildMainImage('images/sumo1.png', 'images/sumo2.png'),
-                  _buildMainText('Rising place川崎', '2,000万円'),
-                  _buildSubText(
-                      Icons.directions_transit_outlined, '京急本線 京急川崎駅より徒歩9分'),
-                  SizedBox(height: 4),
-                  _buildSubText(Icons.add, '1k/21.24 南西向き'),
-                  SizedBox(height: 4),
-                  _buildSubText(Icons.request_quote_rounded, '2階/15階建 築5年'),
-                  SizedBox(height: 4),
-                  _buildActionButton(
-                      '興味なし', Icons.delete, 'お気に入り', Icons.favorite_border),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(bottom: 10),
-              margin: EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.white,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildMainImage('images/sumo1.png', 'images/sumo2.png'),
-                  _buildMainText('Rising place川崎', '2,000万円'),
-                  _buildSubText(
-                      Icons.directions_transit_outlined, '京急本線 京急川崎駅より徒歩9分'),
-                  SizedBox(height: 4),
-                  _buildSubText(Icons.add, '1k/21.24 南西向き'),
-                  SizedBox(height: 4),
-                  _buildSubText(Icons.request_quote_rounded, '2階/15階建 築5年'),
-                  SizedBox(height: 4),
-                  _buildActionButton(
-                      '興味なし', Icons.delete, 'お気に入り', Icons.favorite_border),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(bottom: 10),
-              margin: EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.white,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildMainImage('images/sumo1.png', 'images/sumo2.png'),
-                  _buildMainText('Rising place川崎', '2,000万円'),
-                  _buildSubText(
-                      Icons.directions_transit_outlined, '京急本線 京急川崎駅より徒歩9分'),
-                  SizedBox(height: 4),
-                  _buildSubText(Icons.add, '1k/21.24 南西向き'),
-                  SizedBox(height: 4),
-                  _buildSubText(Icons.request_quote_rounded, '2階/15階建 築5年'),
-                  SizedBox(height: 4),
-                  _buildActionButton(
-                      '興味なし', Icons.delete, 'お気に入り', Icons.favorite_border),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
+    final houseDataList = _createHouseDataList();
+    return ListView.builder(
+      itemCount: houseDataList.length,
+      itemBuilder: (context, index) {
+        final data = houseDataList[index];
+        if (index == 0) {
+          return Column(
+            children: [
+              _createHeaderInfo(context),
+              _createMainInfo(data),
+            ],
+          );
+        } else {
+          return _createMainInfo(data);
+        }
+      },
     );
   }
 
@@ -249,6 +121,99 @@ class SumoScreen extends StatelessWidget {
           label: 'マイページ',
         ),
       ],
+    );
+  }
+
+  Widget _createHeaderInfo(context) {
+    return Container(
+      margin: EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                margin: EdgeInsets.all(12),
+                child: Text(
+                  'カウルのおすすめ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                child: Text(
+                  '新着3件',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+              SizedBox(width: 120),
+              Row(
+                children: [
+                  Text(
+                    '編集',
+                    style: TextStyle(color: Colors.green),
+                  ),
+                  Icon(Icons.brush_outlined, color: Colors.green),
+                ],
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.grey.shade300,
+            ),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      _buildConditions(Icons.directions_transit_outlined,
+                          '東京駅・品川駅・川崎駅・横浜駅・目黒駅・恵比寿駅・渋谷駅'),
+                      SizedBox(height: 4),
+                      _buildConditions(Icons.add, '下限なし〜2,000万円'),
+                      SizedBox(height: 4),
+                      _buildConditions(
+                          Icons.request_quote_rounded, '1R〜4LDK/10㎡以上/徒歩20分'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _createMainInfo(HouseData houseData) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 10),
+      margin: EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildMainImage(houseData.imagePath1, houseData.imagePath2),
+          _buildMainText(houseData.houseName, houseData.housePrice),
+          _buildSubText(Icons.directions_transit_outlined, houseData.station),
+          SizedBox(height: 4),
+          _buildSubText(Icons.add, houseData.infoData1),
+          SizedBox(height: 4),
+          _buildSubText(Icons.request_quote_rounded, houseData.infoData2),
+          SizedBox(height: 4),
+          _buildActionButton(
+              '興味なし', Icons.delete, 'お気に入り', Icons.favorite_border),
+        ],
+      ),
     );
   }
 
@@ -403,19 +368,28 @@ class SumoScreen extends StatelessWidget {
         'images/sumo1.png',
         'images/sumo2.png',
         'Rising place川崎',
-        '2,000万円',
+        '2,300万円',
+        '京急本線 京急川崎駅より徒歩9分',
+        '1k/21.24 南西向き',
+        '2階/15階建 築5年',
       ),
       HouseData(
         'images/sumo1.png',
         'images/sumo2.png',
-        'Rising place川崎',
-        '2,000万円',
+        'Dream 押上',
+        '3,200万円',
+        '半蔵門線 押上駅より徒歩5分',
+        '1k/21.24 南向き',
+        '3階/3階建 築2年',
       ),
       HouseData(
         'images/sumo1.png',
         'images/sumo2.png',
-        'Rising place川崎',
-        '2,000万円',
+        'American 亀戸',
+        '1,700万円',
+        '東日本JR線 亀戸駅より徒歩20分',
+        '2k/42.48 南西向き',
+        '3階/3階建 築2年',
       ),
     ];
   }
@@ -427,6 +401,17 @@ class HouseData {
   final imagePath2;
   final houseName;
   final housePrice;
+  final station;
+  final infoData1;
+  final infoData2;
 
-  HouseData(this.imagePath1, this.imagePath2, this.houseName, this.housePrice);
+  HouseData(
+    this.imagePath1,
+    this.imagePath2,
+    this.houseName,
+    this.housePrice,
+    this.station,
+    this.infoData1,
+    this.infoData2,
+  );
 }
