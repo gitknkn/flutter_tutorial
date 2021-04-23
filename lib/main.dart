@@ -4,7 +4,7 @@ import 'package:youtube_demo/async/async_screen.dart';
 import 'package:youtube_demo/mvvm/screen/home/home_screen.dart';
 import 'package:youtube_demo/practice1/screen/youtube_screen.dart';
 import 'package:youtube_demo/practice2/sumo-screen.dart';
-import 'package:youtube_demo/practice3/merukari-screen.dart';
+import 'package:youtube_demo/practice3/screen/merukari_screen.dart';
 
 void main() {
   runApp(
