@@ -1,14 +1,33 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youtube_demo/practice2/model/house_data.dart';
+import 'package:youtube_demo/practice2/screen/sumo_screen_notifier.dart';
 
-class SumoScreen extends StatelessWidget {
+class SumoScreen extends ConsumerWidget {
+  final sumoScreenStateNotifier =
+      StateNotifierProvider((ref) => SumoScreenStateNotifier());
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    final state = watch(sumoScreenStateNotifier.state);
+    final list = state.houseDataList;
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey.shade200,
         appBar: _createAppBar(context),
-        body: _createBody(context),
+        body: Stack(
+          children: [
+            state.isReadyData ? _createBody(context, list) : Container(),
+            state.isLoading
+                ? Container(
+                    color: Color.fromARGB(64, 0, 0, 0),
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                : Container(),
+          ],
+        ),
         bottomNavigationBar: _createBottomNavigationBar(),
         floatingActionButton: _createActionButton(context),
       ),
@@ -77,8 +96,11 @@ class SumoScreen extends StatelessWidget {
     );
   }
 
-  Widget _createBody(BuildContext context) {
-    final houseDataList = _createHouseDataList();
+  Widget _createBody(BuildContext context, List<HouseData> houseDataList) {
+    if (houseDataList == null) {
+      Container();
+    }
+
     return ListView.builder(
       itemCount: houseDataList.length,
       itemBuilder: (context, index) {
@@ -206,9 +228,9 @@ class SumoScreen extends StatelessWidget {
           _buildMainText(houseData.houseName, houseData.housePrice),
           _buildSubText(Icons.directions_transit_outlined, houseData.station),
           SizedBox(height: 4),
-          _buildSubText(Icons.add, houseData.infoData1),
+          _buildSubText(Icons.add, houseData.info1),
           SizedBox(height: 4),
-          _buildSubText(Icons.request_quote_rounded, houseData.infoData2),
+          _buildSubText(Icons.request_quote_rounded, houseData.info2),
           SizedBox(height: 4),
           _buildActionButton(
               '興味なし', Icons.delete, 'お気に入り', Icons.favorite_border),
@@ -361,57 +383,4 @@ class SumoScreen extends StatelessWidget {
       ],
     );
   }
-
-  List<HouseData> _createHouseDataList() {
-    return [
-      HouseData(
-        'images/sumo1.png',
-        'images/sumo2.png',
-        'Rising place川崎',
-        '2,300万円',
-        '京急本線 京急川崎駅より徒歩9分',
-        '1k/21.24 南西向き',
-        '2階/15階建 築5年',
-      ),
-      HouseData(
-        'images/sumo1.png',
-        'images/sumo2.png',
-        'Dream 押上',
-        '3,200万円',
-        '半蔵門線 押上駅より徒歩5分',
-        '1k/21.24 南向き',
-        '3階/3階建 築2年',
-      ),
-      HouseData(
-        'images/sumo1.png',
-        'images/sumo2.png',
-        'American 亀戸',
-        '1,700万円',
-        '東日本JR線 亀戸駅より徒歩20分',
-        '2k/42.48 南西向き',
-        '3階/3階建 築2年',
-      ),
-    ];
-  }
-}
-
-// ダミー情報
-class HouseData {
-  final imagePath1;
-  final imagePath2;
-  final houseName;
-  final housePrice;
-  final station;
-  final infoData1;
-  final infoData2;
-
-  HouseData(
-    this.imagePath1,
-    this.imagePath2,
-    this.houseName,
-    this.housePrice,
-    this.station,
-    this.infoData1,
-    this.infoData2,
-  );
 }
