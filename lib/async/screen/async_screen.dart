@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_demo/prefs.dart';
 import 'package:youtube_demo/async/data_validation.dart';
+import 'package:youtube_demo/prefs.dart';
 
 //画面初期化時に、Preferencesより名前、年齢、誕生日をロードし画面に表示する
 //  - 未保存の場合、すべての項目に未設定と表示する

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:youtube_demo/async/async_screen.dart';
+import 'package:youtube_demo/async/screen/async_screen.dart';
 import 'package:youtube_demo/mvvm/screen/home/home_screen.dart';
 import 'package:youtube_demo/practice1/screen/youtube_screen.dart';
 import 'package:youtube_demo/practice2/screen/sumo_screen.dart';
