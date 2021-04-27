@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'async_data.dart';
+part of 'profile_data.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -9,12 +9,12 @@ part of 'async_data.dart';
 
 T _$identity<T>(T value) => value;
 
-class _$AsyncDataTearOff {
-  const _$AsyncDataTearOff();
+class _$ProfileDataTearOff {
+  const _$ProfileDataTearOff();
 
 // ignore: unused_element
-  _AsyncData call({String name, int age, String birthday}) {
-    return _AsyncData(
+  _ProfileData call({String name, int age, String birthday}) {
+    return _ProfileData(
       name: name,
       age: age,
       birthday: birthday,
@@ -23,28 +23,29 @@ class _$AsyncDataTearOff {
 }
 
 // ignore: unused_element
-const $AsyncData = _$AsyncDataTearOff();
+const $ProfileData = _$ProfileDataTearOff();
 
-mixin _$AsyncData {
+mixin _$ProfileData {
   String get name;
   int get age;
   String get birthday;
 
-  $AsyncDataCopyWith<AsyncData> get copyWith;
+  $ProfileDataCopyWith<ProfileData> get copyWith;
 }
 
-abstract class $AsyncDataCopyWith<$Res> {
-  factory $AsyncDataCopyWith(AsyncData value, $Res Function(AsyncData) then) =
-      _$AsyncDataCopyWithImpl<$Res>;
+abstract class $ProfileDataCopyWith<$Res> {
+  factory $ProfileDataCopyWith(
+          ProfileData value, $Res Function(ProfileData) then) =
+      _$ProfileDataCopyWithImpl<$Res>;
   $Res call({String name, int age, String birthday});
 }
 
-class _$AsyncDataCopyWithImpl<$Res> implements $AsyncDataCopyWith<$Res> {
-  _$AsyncDataCopyWithImpl(this._value, this._then);
+class _$ProfileDataCopyWithImpl<$Res> implements $ProfileDataCopyWith<$Res> {
+  _$ProfileDataCopyWithImpl(this._value, this._then);
 
-  final AsyncData _value;
+  final ProfileData _value;
   // ignore: unused_field
-  final $Res Function(AsyncData) _then;
+  final $Res Function(ProfileData) _then;
 
   @override
   $Res call({
@@ -60,21 +61,23 @@ class _$AsyncDataCopyWithImpl<$Res> implements $AsyncDataCopyWith<$Res> {
   }
 }
 
-abstract class _$AsyncDataCopyWith<$Res> implements $AsyncDataCopyWith<$Res> {
-  factory _$AsyncDataCopyWith(
-          _AsyncData value, $Res Function(_AsyncData) then) =
-      __$AsyncDataCopyWithImpl<$Res>;
+abstract class _$ProfileDataCopyWith<$Res>
+    implements $ProfileDataCopyWith<$Res> {
+  factory _$ProfileDataCopyWith(
+          _ProfileData value, $Res Function(_ProfileData) then) =
+      __$ProfileDataCopyWithImpl<$Res>;
   @override
   $Res call({String name, int age, String birthday});
 }
 
-class __$AsyncDataCopyWithImpl<$Res> extends _$AsyncDataCopyWithImpl<$Res>
-    implements _$AsyncDataCopyWith<$Res> {
-  __$AsyncDataCopyWithImpl(_AsyncData _value, $Res Function(_AsyncData) _then)
-      : super(_value, (v) => _then(v as _AsyncData));
+class __$ProfileDataCopyWithImpl<$Res> extends _$ProfileDataCopyWithImpl<$Res>
+    implements _$ProfileDataCopyWith<$Res> {
+  __$ProfileDataCopyWithImpl(
+      _ProfileData _value, $Res Function(_ProfileData) _then)
+      : super(_value, (v) => _then(v as _ProfileData));
 
   @override
-  _AsyncData get _value => super._value as _AsyncData;
+  _ProfileData get _value => super._value as _ProfileData;
 
   @override
   $Res call({
@@ -82,7 +85,7 @@ class __$AsyncDataCopyWithImpl<$Res> extends _$AsyncDataCopyWithImpl<$Res>
     Object age = freezed,
     Object birthday = freezed,
   }) {
-    return _then(_AsyncData(
+    return _then(_ProfileData(
       name: name == freezed ? _value.name : name as String,
       age: age == freezed ? _value.age : age as int,
       birthday: birthday == freezed ? _value.birthday : birthday as String,
@@ -90,8 +93,8 @@ class __$AsyncDataCopyWithImpl<$Res> extends _$AsyncDataCopyWithImpl<$Res>
   }
 }
 
-class _$_AsyncData implements _AsyncData {
-  const _$_AsyncData({this.name, this.age, this.birthday});
+class _$_ProfileData implements _ProfileData {
+  const _$_ProfileData({this.name, this.age, this.birthday});
 
   @override
   final String name;
@@ -102,13 +105,13 @@ class _$_AsyncData implements _AsyncData {
 
   @override
   String toString() {
-    return 'AsyncData(name: $name, age: $age, birthday: $birthday)';
+    return 'ProfileData(name: $name, age: $age, birthday: $birthday)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _AsyncData &&
+        (other is _ProfileData &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.age, age) ||
@@ -126,13 +129,13 @@ class _$_AsyncData implements _AsyncData {
       const DeepCollectionEquality().hash(birthday);
 
   @override
-  _$AsyncDataCopyWith<_AsyncData> get copyWith =>
-      __$AsyncDataCopyWithImpl<_AsyncData>(this, _$identity);
+  _$ProfileDataCopyWith<_ProfileData> get copyWith =>
+      __$ProfileDataCopyWithImpl<_ProfileData>(this, _$identity);
 }
 
-abstract class _AsyncData implements AsyncData {
-  const factory _AsyncData({String name, int age, String birthday}) =
-      _$_AsyncData;
+abstract class _ProfileData implements ProfileData {
+  const factory _ProfileData({String name, int age, String birthday}) =
+      _$_ProfileData;
 
   @override
   String get name;
@@ -141,5 +144,5 @@ abstract class _AsyncData implements AsyncData {
   @override
   String get birthday;
   @override
-  _$AsyncDataCopyWith<_AsyncData> get copyWith;
+  _$ProfileDataCopyWith<_ProfileData> get copyWith;
 }
