@@ -15,7 +15,6 @@ class AsyncScreenStateNotifier extends StateNotifier<ProfileState> {
     state = state.copyWith(
       isLoading: true,
     );
-
     await Prefs.setName(name);
     await Prefs.setAge(int.parse(age));
     await Prefs.setBirthDay(birthday);
@@ -33,7 +32,6 @@ class AsyncScreenStateNotifier extends StateNotifier<ProfileState> {
     );
     state = state.copyWith(
       isLoading: false,
-      isReadyData: true,
       profileData: profileData,
     );
   }

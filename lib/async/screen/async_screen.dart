@@ -51,7 +51,9 @@ class AsyncScreen extends ConsumerWidget {
             children: [
               Text('名前', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(state.isReadyData ? state.profileData.name : "未設定"),
+              Text(state.profileData.name.isNotEmpty
+                  ? state.profileData.name
+                  : "未設定"),
             ],
           ),
           SizedBox(height: 12),
@@ -60,8 +62,9 @@ class AsyncScreen extends ConsumerWidget {
             children: [
               Text('年齢', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(
-                  state.isReadyData ? state.profileData.age.toString() : '未設定'),
+              Text(state.profileData.age.toString().isNotEmpty
+                  ? state.profileData.age.toString()
+                  : '未設定'),
             ],
           ),
           SizedBox(height: 12),
@@ -70,7 +73,9 @@ class AsyncScreen extends ConsumerWidget {
             children: [
               Text('誕生日', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(state.isReadyData ? state.profileData.birthday : '未設定'),
+              Text(state.profileData.birthday.isNotEmpty
+                  ? state.profileData.birthday
+                  : "未設定"),
             ],
           ),
         ],
@@ -92,11 +97,17 @@ class AsyncScreen extends ConsumerWidget {
   }
 
   Widget _buildAlertDialog(BuildContext context, ProfileState state) {
-    _nameController = TextEditingController(text: state.profileData.name);
-    _ageController =
-        TextEditingController(text: state.profileData.age.toString());
-    _birthdayController =
-        TextEditingController(text: state.profileData.birthday);
+    _nameController = TextEditingController(
+        text:
+            state.profileData.name.isNotEmpty ? state.profileData.name : "未設定");
+    _ageController = TextEditingController(
+        text: state.profileData.age.toString().isNotEmpty
+            ? state.profileData.age.toString()
+            : '未設定');
+    _birthdayController = TextEditingController(
+        text: state.profileData.birthday.isNotEmpty
+            ? state.profileData.birthday
+            : "未設定");
 
     return AlertDialog(
       content: Column(
