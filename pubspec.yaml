@@ -23,6 +23,9 @@ dependencies:
   flutter_riverpod: ^0.12.1
   flutter_state_notifier: ^0.6.1
   webview_flutter: ^1.0.7
+  moor_flutter: ^3.1.0
+  path_provider:
+  path:
 
   badges: ^1.2.0
 
@@ -33,6 +36,7 @@ dev_dependencies:
   freezed: ^0.11.2
   retrofit_generator: ^1.4.1
   json_serializable: ^3.3.0
+  moor_generator: ^3.1.0
 
 flutter:
 

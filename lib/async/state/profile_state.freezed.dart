@@ -41,6 +41,8 @@ abstract class $ProfileStateCopyWith<$Res> {
           ProfileState value, $Res Function(ProfileState) then) =
       _$ProfileStateCopyWithImpl<$Res>;
   $Res call({bool isLoading, bool isReadyData, ProfileData profileData});
+
+  $ProfileDataCopyWith<$Res> get profileData;
 }
 
 class _$ProfileStateCopyWithImpl<$Res> implements $ProfileStateCopyWith<$Res> {
@@ -65,6 +67,16 @@ class _$ProfileStateCopyWithImpl<$Res> implements $ProfileStateCopyWith<$Res> {
           : profileData as ProfileData,
     ));
   }
+
+  @override
+  $ProfileDataCopyWith<$Res> get profileData {
+    if (_value.profileData == null) {
+      return null;
+    }
+    return $ProfileDataCopyWith<$Res>(_value.profileData, (value) {
+      return _then(_value.copyWith(profileData: value));
+    });
+  }
 }
 
 abstract class _$ProfileStateCopyWith<$Res>
@@ -74,6 +86,9 @@ abstract class _$ProfileStateCopyWith<$Res>
       __$ProfileStateCopyWithImpl<$Res>;
   @override
   $Res call({bool isLoading, bool isReadyData, ProfileData profileData});
+
+  @override
+  $ProfileDataCopyWith<$Res> get profileData;
 }
 
 class __$ProfileStateCopyWithImpl<$Res> extends _$ProfileStateCopyWithImpl<$Res>
