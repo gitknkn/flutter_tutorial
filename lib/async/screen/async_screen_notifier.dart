@@ -37,8 +37,7 @@ class AsyncScreenStateNotifier extends StateNotifier<ProfileState> {
     state = state.copyWith(
       isLoading: false,
       profileData: profileData,
-      isReadyData: profileData.name != null,
-      // isReadyData: true,
+      isReadyData: profileData != null && profileData.name != null,
     );
   }
 }
