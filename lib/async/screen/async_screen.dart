@@ -29,6 +29,8 @@ class AsyncScreen extends ConsumerWidget {
   var _ageController;
   var _birthdayController;
 
+  String nullMessage = '未設定';
+
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final state = watch(asyncScreenStateNotifier.state);
@@ -51,9 +53,8 @@ class AsyncScreen extends ConsumerWidget {
             children: [
               Text('名前', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(state.profileData.name.isNotEmpty
-                  ? state.profileData.name
-                  : "未設定"),
+              Text(state.isReadyData ? state.profileData.name : nullMessage),
+              // Text(state.profileData.age.toString() ?? nullMessage),
             ],
           ),
           SizedBox(height: 12),
@@ -62,9 +63,10 @@ class AsyncScreen extends ConsumerWidget {
             children: [
               Text('年齢', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(state.profileData.age.toString().isNotEmpty
+              Text(state.isReadyData
                   ? state.profileData.age.toString()
-                  : '未設定'),
+                  : nullMessage),
+              // Text(state.profileData.name ?? nullMessage),
             ],
           ),
           SizedBox(height: 12),
@@ -73,9 +75,8 @@ class AsyncScreen extends ConsumerWidget {
             children: [
               Text('誕生日', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(state.profileData.birthday.isNotEmpty
-                  ? state.profileData.birthday
-                  : "未設定"),
+              Text(
+                  state.isReadyData ? state.profileData.birthday : nullMessage),
             ],
           ),
         ],
@@ -97,17 +98,12 @@ class AsyncScreen extends ConsumerWidget {
   }
 
   Widget _buildAlertDialog(BuildContext context, ProfileState state) {
-    _nameController = TextEditingController(
-        text:
-            state.profileData.name.isNotEmpty ? state.profileData.name : "未設定");
+    _nameController =
+        TextEditingController(text: state.profileData.name ?? nullMessage);
     _ageController = TextEditingController(
-        text: state.profileData.age.toString().isNotEmpty
-            ? state.profileData.age.toString()
-            : '未設定');
-    _birthdayController = TextEditingController(
-        text: state.profileData.birthday.isNotEmpty
-            ? state.profileData.birthday
-            : "未設定");
+        text: state.profileData.age.toString() ?? nullMessage);
+    _birthdayController =
+        TextEditingController(text: state.profileData.birthday ?? nullMessage);
 
     return AlertDialog(
       content: Column(
@@ -175,7 +171,7 @@ class AsyncScreen extends ConsumerWidget {
     }
 
     //年齢が空または、数値(数値形式)でない時
-    if (age.isEmpty || double.tryParse(name) != null) {
+    if (age.isEmpty || double.tryParse(age) == null) {
       errorMessage.add('年齢が空もしくは数字ではありません');
     }
 

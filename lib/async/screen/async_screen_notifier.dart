@@ -12,12 +12,14 @@ class AsyncScreenStateNotifier extends StateNotifier<ProfileState> {
   }
 
   saveUserData(String name, String age, String birthday) async {
-    state = state.copyWith(
-      isLoading: true,
-    );
     await Prefs.setName(name);
     await Prefs.setAge(int.parse(age));
     await Prefs.setBirthDay(birthday);
+
+    state = state.copyWith(
+      isLoading: true,
+    );
+
     loadUserData();
   }
 
@@ -25,14 +27,18 @@ class AsyncScreenStateNotifier extends StateNotifier<ProfileState> {
     state = state.copyWith(
       isLoading: true,
     );
+
     final profileData = ProfileData(
       name: await Prefs.getName(),
       age: await Prefs.getAge(),
       birthday: await Prefs.getBirthDay(),
     );
+
     state = state.copyWith(
       isLoading: false,
       profileData: profileData,
+      isReadyData: profileData.name != null,
+      // isReadyData: true,
     );
   }
 }
