@@ -1,40 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'todos.dart';
+part of 'db.dart';
 
 // **************************************************************************
 // MoorGenerator
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class ToDo extends DataClass implements Insertable<ToDo> {
+class Todo extends DataClass implements Insertable<Todo> {
   final int id;
   final String title;
   final String mainText;
-  final DateTime date;
-  final DateTime deadline;
-  ToDo(
+  final String date;
+  final String deadLine;
+  Todo(
       {@required this.id,
       @required this.title,
       @required this.mainText,
       @required this.date,
-      @required this.deadline});
-  factory ToDo.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      @required this.deadLine});
+  factory Todo.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    final dateTimeType = db.typeSystem.forDartType<DateTime>();
-    return ToDo(
+    return Todo(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       title:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
       mainText: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}main_text']),
-      date:
-          dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
-      deadline: dateTimeType
-          .mapFromDatabaseResponse(data['${effectivePrefix}deadline']),
+      date: stringType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
+      deadLine: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}dead_line']),
     );
   }
   @override
@@ -50,16 +48,16 @@ class ToDo extends DataClass implements Insertable<ToDo> {
       map['main_text'] = Variable<String>(mainText);
     }
     if (!nullToAbsent || date != null) {
-      map['date'] = Variable<DateTime>(date);
+      map['date'] = Variable<String>(date);
     }
-    if (!nullToAbsent || deadline != null) {
-      map['deadline'] = Variable<DateTime>(deadline);
+    if (!nullToAbsent || deadLine != null) {
+      map['dead_line'] = Variable<String>(deadLine);
     }
     return map;
   }
 
-  ToDosCompanion toCompanion(bool nullToAbsent) {
-    return ToDosCompanion(
+  TodosCompanion toCompanion(bool nullToAbsent) {
+    return TodosCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       title:
           title == null && nullToAbsent ? const Value.absent() : Value(title),
@@ -67,21 +65,21 @@ class ToDo extends DataClass implements Insertable<ToDo> {
           ? const Value.absent()
           : Value(mainText),
       date: date == null && nullToAbsent ? const Value.absent() : Value(date),
-      deadline: deadline == null && nullToAbsent
+      deadLine: deadLine == null && nullToAbsent
           ? const Value.absent()
-          : Value(deadline),
+          : Value(deadLine),
     );
   }
 
-  factory ToDo.fromJson(Map<String, dynamic> json,
+  factory Todo.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return ToDo(
+    return Todo(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
       mainText: serializer.fromJson<String>(json['mainText']),
-      date: serializer.fromJson<DateTime>(json['date']),
-      deadline: serializer.fromJson<DateTime>(json['deadline']),
+      date: serializer.fromJson<String>(json['date']),
+      deadLine: serializer.fromJson<String>(json['deadLine']),
     );
   }
   @override
@@ -91,32 +89,32 @@ class ToDo extends DataClass implements Insertable<ToDo> {
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
       'mainText': serializer.toJson<String>(mainText),
-      'date': serializer.toJson<DateTime>(date),
-      'deadline': serializer.toJson<DateTime>(deadline),
+      'date': serializer.toJson<String>(date),
+      'deadLine': serializer.toJson<String>(deadLine),
     };
   }
 
-  ToDo copyWith(
+  Todo copyWith(
           {int id,
           String title,
           String mainText,
-          DateTime date,
-          DateTime deadline}) =>
-      ToDo(
+          String date,
+          String deadLine}) =>
+      Todo(
         id: id ?? this.id,
         title: title ?? this.title,
         mainText: mainText ?? this.mainText,
         date: date ?? this.date,
-        deadline: deadline ?? this.deadline,
+        deadLine: deadLine ?? this.deadLine,
       );
   @override
   String toString() {
-    return (StringBuffer('ToDo(')
+    return (StringBuffer('Todo(')
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('mainText: $mainText, ')
           ..write('date: $date, ')
-          ..write('deadline: $deadline')
+          ..write('deadLine: $deadLine')
           ..write(')'))
         .toString();
   }
@@ -125,69 +123,69 @@ class ToDo extends DataClass implements Insertable<ToDo> {
   int get hashCode => $mrjf($mrjc(
       id.hashCode,
       $mrjc(title.hashCode,
-          $mrjc(mainText.hashCode, $mrjc(date.hashCode, deadline.hashCode)))));
+          $mrjc(mainText.hashCode, $mrjc(date.hashCode, deadLine.hashCode)))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is ToDo &&
+      (other is Todo &&
           other.id == this.id &&
           other.title == this.title &&
           other.mainText == this.mainText &&
           other.date == this.date &&
-          other.deadline == this.deadline);
+          other.deadLine == this.deadLine);
 }
 
-class ToDosCompanion extends UpdateCompanion<ToDo> {
+class TodosCompanion extends UpdateCompanion<Todo> {
   final Value<int> id;
   final Value<String> title;
   final Value<String> mainText;
-  final Value<DateTime> date;
-  final Value<DateTime> deadline;
-  const ToDosCompanion({
+  final Value<String> date;
+  final Value<String> deadLine;
+  const TodosCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.mainText = const Value.absent(),
     this.date = const Value.absent(),
-    this.deadline = const Value.absent(),
+    this.deadLine = const Value.absent(),
   });
-  ToDosCompanion.insert({
+  TodosCompanion.insert({
     this.id = const Value.absent(),
     @required String title,
     @required String mainText,
-    @required DateTime date,
-    @required DateTime deadline,
+    @required String date,
+    @required String deadLine,
   })  : title = Value(title),
         mainText = Value(mainText),
         date = Value(date),
-        deadline = Value(deadline);
-  static Insertable<ToDo> custom({
+        deadLine = Value(deadLine);
+  static Insertable<Todo> custom({
     Expression<int> id,
     Expression<String> title,
     Expression<String> mainText,
-    Expression<DateTime> date,
-    Expression<DateTime> deadline,
+    Expression<String> date,
+    Expression<String> deadLine,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
       if (mainText != null) 'main_text': mainText,
       if (date != null) 'date': date,
-      if (deadline != null) 'deadline': deadline,
+      if (deadLine != null) 'dead_line': deadLine,
     });
   }
 
-  ToDosCompanion copyWith(
+  TodosCompanion copyWith(
       {Value<int> id,
       Value<String> title,
       Value<String> mainText,
-      Value<DateTime> date,
-      Value<DateTime> deadline}) {
-    return ToDosCompanion(
+      Value<String> date,
+      Value<String> deadLine}) {
+    return TodosCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       mainText: mainText ?? this.mainText,
       date: date ?? this.date,
-      deadline: deadline ?? this.deadline,
+      deadLine: deadLine ?? this.deadLine,
     );
   }
 
@@ -204,31 +202,31 @@ class ToDosCompanion extends UpdateCompanion<ToDo> {
       map['main_text'] = Variable<String>(mainText.value);
     }
     if (date.present) {
-      map['date'] = Variable<DateTime>(date.value);
+      map['date'] = Variable<String>(date.value);
     }
-    if (deadline.present) {
-      map['deadline'] = Variable<DateTime>(deadline.value);
+    if (deadLine.present) {
+      map['dead_line'] = Variable<String>(deadLine.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('ToDosCompanion(')
+    return (StringBuffer('TodosCompanion(')
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('mainText: $mainText, ')
           ..write('date: $date, ')
-          ..write('deadline: $deadline')
+          ..write('deadLine: $deadLine')
           ..write(')'))
         .toString();
   }
 }
 
-class $ToDosTable extends ToDos with TableInfo<$ToDosTable, ToDo> {
+class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   final GeneratedDatabase _db;
   final String _alias;
-  $ToDosTable(this._db, [this._alias]);
+  $TodosTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
   @override
@@ -244,7 +242,7 @@ class $ToDosTable extends ToDos with TableInfo<$ToDosTable, ToDo> {
   GeneratedTextColumn get title => _title ??= _constructTitle();
   GeneratedTextColumn _constructTitle() {
     return GeneratedTextColumn('title', $tableName, false,
-        minTextLength: 3, maxTextLength: 32);
+        minTextLength: 1, maxTextLength: 32);
   }
 
   final VerificationMeta _mainTextMeta = const VerificationMeta('mainText');
@@ -253,43 +251,43 @@ class $ToDosTable extends ToDos with TableInfo<$ToDosTable, ToDo> {
   GeneratedTextColumn get mainText => _mainText ??= _constructMainText();
   GeneratedTextColumn _constructMainText() {
     return GeneratedTextColumn('main_text', $tableName, false,
-        minTextLength: 5);
+        minTextLength: 2, maxTextLength: 100);
   }
 
   final VerificationMeta _dateMeta = const VerificationMeta('date');
-  GeneratedDateTimeColumn _date;
+  GeneratedTextColumn _date;
   @override
-  GeneratedDateTimeColumn get date => _date ??= _constructDate();
-  GeneratedDateTimeColumn _constructDate() {
-    return GeneratedDateTimeColumn(
+  GeneratedTextColumn get date => _date ??= _constructDate();
+  GeneratedTextColumn _constructDate() {
+    return GeneratedTextColumn(
       'date',
       $tableName,
       false,
     );
   }
 
-  final VerificationMeta _deadlineMeta = const VerificationMeta('deadline');
-  GeneratedDateTimeColumn _deadline;
+  final VerificationMeta _deadLineMeta = const VerificationMeta('deadLine');
+  GeneratedTextColumn _deadLine;
   @override
-  GeneratedDateTimeColumn get deadline => _deadline ??= _constructDeadline();
-  GeneratedDateTimeColumn _constructDeadline() {
-    return GeneratedDateTimeColumn(
-      'deadline',
+  GeneratedTextColumn get deadLine => _deadLine ??= _constructDeadLine();
+  GeneratedTextColumn _constructDeadLine() {
+    return GeneratedTextColumn(
+      'dead_line',
       $tableName,
       false,
     );
   }
 
   @override
-  List<GeneratedColumn> get $columns => [id, title, mainText, date, deadline];
+  List<GeneratedColumn> get $columns => [id, title, mainText, date, deadLine];
   @override
-  $ToDosTable get asDslTable => this;
+  $TodosTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'to_dos';
+  String get $tableName => _alias ?? 'todos';
   @override
-  final String actualTableName = 'to_dos';
+  final String actualTableName = 'todos';
   @override
-  VerificationContext validateIntegrity(Insertable<ToDo> instance,
+  VerificationContext validateIntegrity(Insertable<Todo> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -314,11 +312,11 @@ class $ToDosTable extends ToDos with TableInfo<$ToDosTable, ToDo> {
     } else if (isInserting) {
       context.missing(_dateMeta);
     }
-    if (data.containsKey('deadline')) {
-      context.handle(_deadlineMeta,
-          deadline.isAcceptableOrUnknown(data['deadline'], _deadlineMeta));
+    if (data.containsKey('dead_line')) {
+      context.handle(_deadLineMeta,
+          deadLine.isAcceptableOrUnknown(data['dead_line'], _deadLineMeta));
     } else if (isInserting) {
-      context.missing(_deadlineMeta);
+      context.missing(_deadLineMeta);
     }
     return context;
   }
@@ -326,23 +324,23 @@ class $ToDosTable extends ToDos with TableInfo<$ToDosTable, ToDo> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ToDo map(Map<String, dynamic> data, {String tablePrefix}) {
+  Todo map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return ToDo.fromData(data, _db, prefix: effectivePrefix);
+    return Todo.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $ToDosTable createAlias(String alias) {
-    return $ToDosTable(_db, alias);
+  $TodosTable createAlias(String alias) {
+    return $TodosTable(_db, alias);
   }
 }
 
 abstract class _$MyDatabase extends GeneratedDatabase {
   _$MyDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $ToDosTable _toDos;
-  $ToDosTable get toDos => _toDos ??= $ToDosTable(this);
+  $TodosTable _todos;
+  $TodosTable get todos => _todos ??= $TodosTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [toDos];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [todos];
 }
