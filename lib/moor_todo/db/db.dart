@@ -28,26 +28,36 @@ LazyDatabase _openConnection() {
 class MyDatabase extends _$MyDatabase {
   MyDatabase() : super(_openConnection());
 
+  static MyDatabase _instance;
+
+  // シングルトン？
+  static MyDatabase getInstance() {
+    if (_instance == null) {
+      _instance = MyDatabase();
+    }
+    return _instance;
+  }
+
   @override
   int get schemaVersion => 1;
 
   // 全てのtodoを取得(読み取り) read
-  Future<List<Todo>> get allTodoEntries {
+  Future<List<Todo>> allTodoData() {
     return select(todos).get();
   }
 
   // テーブルにデーター追加 create
-  Future<int> addTodoEntry(TodosCompanion data) {
+  Future<int> addTodoData(Todo data) {
     return into(todos).insert(data);
   }
 
   // 変更された行を返す update
-  Future<int> updateTodo(int id, TodosCompanion data) {
-    return (update(todos)..where((it) => it.id.equals(id))).write(data);
+  Future updateTodoDate(Todo data) {
+    return update(todos).replace(data);
   }
 
   // 変更された行を返す delete
-  Future<int> deleteTodo(int id) {
+  Future<int> deleteTodoData(int id) {
     return (delete(todos)..where((it) => it.id.equals(id))).go();
   }
 }

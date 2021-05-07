@@ -13,29 +13,24 @@ class TodoScreenStateNotifier extends StateNotifier<TodoState> {
 
   saveTodo() async {
     state = state.copyWith(isLoading: true);
-
-    final todoItem = await _repository.getAllTodoItems();
-
+    final allTodoItems = await _repository.getAllTodoItems();
     state = state.copyWith(
       isLoading: false,
       isReadyData: true,
-      todosItems: todoItem,
+      // _repository.getAllTodoItems()で読み込んだデータを代入
+      todosItems: allTodoItems,
     );
   }
 
-  writeTodo(int id, TodosCompanion data) async {
+  writeTodo(Todo data) async {
     state = state.copyWith(isLoading: true);
-
-    await _repository.updateTodoItems(id, data);
-
+    await _repository.addTodoItems(data);
     saveTodo();
   }
 
-  deleteTodo(int id) async {
+  deleteTodo(Todo data) async {
     state = state.copyWith(isLoading: true);
-
-    await _repository.deleteTodoItems(id);
-
+    await _repository.deleteTodoItems(data.id);
     saveTodo();
   }
 }

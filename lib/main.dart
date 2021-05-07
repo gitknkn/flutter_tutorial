@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_demo/async/screen/async_screen.dart';
 import 'package:youtube_demo/moor_todo/screen/todo_screen.dart';
@@ -19,6 +20,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('ja'),
+      ],
       home: MainScreen(),
       routes: <String, WidgetBuilder>{
         '/practice1/youtube_screen': (BuildContext context) => YoutubeScreen(),
