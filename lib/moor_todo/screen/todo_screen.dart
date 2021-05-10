@@ -46,7 +46,6 @@ class ToDosScreen extends ConsumerWidget {
   }
 
   Widget _createBody(List<Todo> todosItems, BuildContext context) {
-    print(todosItems.length);
     return ListView.builder(
       itemCount: todosItems.length,
       itemBuilder: (context, i) {
