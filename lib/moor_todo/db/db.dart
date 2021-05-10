@@ -1,6 +1,5 @@
 import 'dart:io';
 
-// import 'package:moor_ffi/moor_ffi.dart';
 import 'package:moor/ffi.dart';
 import 'package:moor/moor.dart';
 import 'package:path/path.dart' as p;
@@ -30,7 +29,6 @@ class MyDatabase extends _$MyDatabase {
 
   static MyDatabase _instance;
 
-  // シングルトン？
   static MyDatabase getInstance() {
     if (_instance == null) {
       _instance = MyDatabase();
