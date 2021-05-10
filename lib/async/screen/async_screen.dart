@@ -29,7 +29,7 @@ class AsyncScreen extends ConsumerWidget {
   var _ageController;
   var _birthdayController;
 
-  String nullMessage = '未設定';
+  static const _nullMessage = '未設定';
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
@@ -53,8 +53,7 @@ class AsyncScreen extends ConsumerWidget {
             children: [
               Text('名前', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(state.isReadyData ? state.profileData.name : nullMessage),
-              // Text(state.profileData.age.toString() ?? nullMessage),
+              Text(state.isReadyData ? state.profileData.name : _nullMessage),
             ],
           ),
           SizedBox(height: 12),
@@ -65,8 +64,7 @@ class AsyncScreen extends ConsumerWidget {
               SizedBox(width: 20),
               Text(state.isReadyData
                   ? state.profileData.age.toString()
-                  : nullMessage),
-              // Text(state.profileData.name ?? nullMessage),
+                  : _nullMessage),
             ],
           ),
           SizedBox(height: 12),
@@ -75,8 +73,9 @@ class AsyncScreen extends ConsumerWidget {
             children: [
               Text('誕生日', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(
-                  state.isReadyData ? state.profileData.birthday : nullMessage),
+              Text(state.isReadyData
+                  ? state.profileData.birthday
+                  : _nullMessage),
             ],
           ),
         ],
@@ -99,11 +98,11 @@ class AsyncScreen extends ConsumerWidget {
 
   Widget _buildAlertDialog(BuildContext context, ProfileState state) {
     _nameController =
-        TextEditingController(text: state.profileData.name ?? nullMessage);
+        TextEditingController(text: state.profileData.name ?? _nullMessage);
     _ageController = TextEditingController(
-        text: state.profileData.age.toString() ?? nullMessage);
+        text: state.profileData.age.toString() ?? _nullMessage);
     _birthdayController =
-        TextEditingController(text: state.profileData.birthday ?? nullMessage);
+        TextEditingController(text: state.profileData.birthday ?? _nullMessage);
 
     return AlertDialog(
       content: Column(
