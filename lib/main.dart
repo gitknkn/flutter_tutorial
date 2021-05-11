@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_demo/async/screen/async_screen.dart';
+import 'package:youtube_demo/moor_todo/screen/todo_screen.dart';
 import 'package:youtube_demo/mvvm/screen/home/home_screen.dart';
 import 'package:youtube_demo/practice1/screen/youtube_screen.dart';
 import 'package:youtube_demo/practice2/screen/sumo_screen.dart';
@@ -18,6 +20,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('ja'),
+      ],
       home: MainScreen(),
       routes: <String, WidgetBuilder>{
         '/practice1/youtube_screen': (BuildContext context) => YoutubeScreen(),
@@ -26,6 +34,7 @@ class MyApp extends StatelessWidget {
             MerukariScreen(),
         '/async/screen/async_screen': (BuildContext context) => AsyncScreen(),
         '/mvvm/screen/home/home_screen': (context) => HomeScreen(),
+        '/moor_todo/screen/todos_screen': (context) => ToDosScreen(),
       },
     );
   }
@@ -99,6 +108,18 @@ class MainScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context)
                         .pushNamed('/mvvm/screen/home/home_screen');
+                  },
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.black,
+              child: Center(
+                child: ElevatedButton(
+                  child: Text('Moor ToDo'),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed('/moor_todo/screen/todos_screen');
                   },
                 ),
               ),
