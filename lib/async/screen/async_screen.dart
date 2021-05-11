@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_demo/prefs.dart';
-import 'package:youtube_demo/async/data_validation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youtube_demo/async/screen/async_screen_notifier.dart';
+import 'package:youtube_demo/async/screen/data_validation.dart';
+import 'package:youtube_demo/async/state/profile_state.dart';
 
 //画面初期化時に、Preferencesより名前、年齢、誕生日をロードし画面に表示する
 //  - 未保存の場合、すべての項目に未設定と表示する
@@ -19,56 +21,29 @@ import 'package:youtube_demo/async/data_validation.dart';
 // StatefulWidget, async, await, Future
 // Dialog, TextEditingController, Validation
 
-class AsyncScreen extends StatefulWidget {
-  @override
-  _AsyncScreenState createState() => _AsyncScreenState();
-}
+final asyncScreenStateNotifier =
+    StateNotifierProvider((ref) => AsyncScreenStateNotifier());
 
-class _AsyncScreenState extends State<AsyncScreen> {
-  // 変更可能なフィールド
-  String _name;
-  int _age;
-  String _birthday;
-
-  // TextEditingControllerを格納する為の変数
-  // TextFieldの入力内容を管理し、入力内容を画面に描画できる
+class AsyncScreen extends ConsumerWidget {
   var _nameController;
   var _ageController;
   var _birthdayController;
 
-  // アプリ起動時に一度だけ実行する処理 super.initState()は、必須
-  @override
-  void initState() {
-    super.initState();
-    _loadUserData();
-  }
-
-  _loadUserData() async {
-    _name = await Prefs.getName();
-    _age = await Prefs.getAge();
-    _birthday = await Prefs.getBirthDay();
-    setState(() {});
-    // setStateを配置しないと描画されないので、注意
-  }
-
-  _saveUserData(String name, String age, String birthday) async {
-    await Prefs.setName(name);
-    await Prefs.setAge(int.parse(age));
-    await Prefs.setBirthDay(birthday);
-    setState(() {});
-  }
+  static const _nullMessage = '未設定';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    final state = watch(asyncScreenStateNotifier.state);
+
     return Scaffold(
       body: SafeArea(
-        child: _createBody(context),
+        child: _createBody(context, state),
       ),
-      floatingActionButton: _createFloatingActionButton(),
+      floatingActionButton: _createFloatingActionButton(context, state),
     );
   }
 
-  Widget _createBody(context) {
+  Widget _createBody(BuildContext context, ProfileState state) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -78,7 +53,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
             children: [
               Text('名前', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(_name != null ? _name : '未設定'),
+              Text(state.isReadyData ? state.profileData.name : _nullMessage),
             ],
           ),
           SizedBox(height: 12),
@@ -87,7 +62,9 @@ class _AsyncScreenState extends State<AsyncScreen> {
             children: [
               Text('年齢', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(_age != null ? _age.toString() : '未設定'),
+              Text(state.isReadyData
+                  ? state.profileData.age.toString()
+                  : _nullMessage),
             ],
           ),
           SizedBox(height: 12),
@@ -96,7 +73,9 @@ class _AsyncScreenState extends State<AsyncScreen> {
             children: [
               Text('誕生日', style: TextStyle(color: Colors.grey)),
               SizedBox(width: 20),
-              Text(_birthday != null ? _birthday : '未設定'),
+              Text(state.isReadyData
+                  ? state.profileData.birthday
+                  : _nullMessage),
             ],
           ),
         ],
@@ -104,23 +83,26 @@ class _AsyncScreenState extends State<AsyncScreen> {
     );
   }
 
-  Widget _createFloatingActionButton() {
+  Widget _createFloatingActionButton(BuildContext context, ProfileState state) {
     return FloatingActionButton(
       backgroundColor: Colors.grey.shade200,
       child: Icon(Icons.edit, color: Colors.blue.shade300),
       onPressed: () {
         showDialog(
           context: context,
-          builder: (_) => _buildAlertDialog(context),
-        ).then((value) => _loadUserData());
+          builder: (_) => _buildAlertDialog(context, state),
+        );
       },
     );
   }
 
-  Widget _buildAlertDialog(BuildContext context) {
-    _nameController = TextEditingController(text: _name);
-    _ageController = TextEditingController(text: _age.toString());
-    _birthdayController = TextEditingController(text: _birthday);
+  Widget _buildAlertDialog(BuildContext context, ProfileState state) {
+    _nameController =
+        TextEditingController(text: state.profileData.name ?? _nullMessage);
+    _ageController = TextEditingController(
+        text: state.profileData.age.toString() ?? _nullMessage);
+    _birthdayController =
+        TextEditingController(text: state.profileData.birthday ?? _nullMessage);
 
     return AlertDialog(
       content: Column(
@@ -132,11 +114,6 @@ class _AsyncScreenState extends State<AsyncScreen> {
               hintText: '名前を入力して下さい',
               labelText: '名前',
             ),
-            onChanged: (String text) {
-              setState(() {
-                _name = text;
-              });
-            },
           ),
           TextField(
             controller: _ageController,
@@ -145,11 +122,6 @@ class _AsyncScreenState extends State<AsyncScreen> {
               hintText: '年齢を入力',
               labelText: '年齢',
             ),
-            onChanged: (String num) {
-              setState(() {
-                _age = int.parse(num);
-              });
-            },
           ),
           TextField(
             controller: _birthdayController,
@@ -157,11 +129,6 @@ class _AsyncScreenState extends State<AsyncScreen> {
               hintText: '誕生日を入力',
               labelText: '誕生日',
             ),
-            onChanged: (String text) {
-              setState(() {
-                _birthday = text;
-              });
-            },
           ),
         ],
       ),
@@ -175,12 +142,13 @@ class _AsyncScreenState extends State<AsyncScreen> {
         ElevatedButton(
           child: Text('保存'),
           onPressed: () {
-            if (_isValid()) {
-              _saveUserData(_nameController.text, _ageController.text,
-                  _birthdayController.text);
-              setState(() {
-                Navigator.pop(context);
-              });
+            if (_isValid(context)) {
+              context.read(asyncScreenStateNotifier).saveUserData(
+                    _nameController.text,
+                    _ageController.text,
+                    _birthdayController.text,
+                  );
+              Navigator.pop(context);
             }
           },
         ),
@@ -189,7 +157,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
   }
 
   // バリデーションメソッド
-  bool _isValid() {
+  bool _isValid(BuildContext context) {
     final name = _nameController.text;
     final age = _ageController.text;
     final birthday = _birthdayController.text;
@@ -202,7 +170,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
     }
 
     //年齢が空または、数値(数値形式)でない時
-    if (age.isEmpty || double.tryParse(name) != null) {
+    if (age.isEmpty || double.tryParse(age) == null) {
       errorMessage.add('年齢が空もしくは数字ではありません');
     }
 

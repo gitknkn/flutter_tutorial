@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:youtube_demo/async/async_screen.dart';
+import 'package:youtube_demo/async/screen/async_screen.dart';
 import 'package:youtube_demo/mvvm/screen/home/home_screen.dart';
 import 'package:youtube_demo/practice1/screen/youtube_screen.dart';
 import 'package:youtube_demo/practice2/screen/sumo_screen.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         '/practice2/sumo-screen': (BuildContext context) => SumoScreen(),
         '/practice3/merukari-screen': (BuildContext context) =>
             MerukariScreen(),
-        '/async/async_screen': (context) => AsyncScreen(),
+        '/async/screen/async_screen': (BuildContext context) => AsyncScreen(),
         '/mvvm/screen/home/home_screen': (context) => HomeScreen(),
       },
     );
@@ -85,7 +85,8 @@ class MainScreen extends StatelessWidget {
                 child: ElevatedButton(
                   child: Text('Async'),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/async/async_screen');
+                    Navigator.of(context)
+                        .pushNamed('/async/screen/async_screen');
                   },
                 ),
               ),
