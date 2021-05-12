@@ -8,6 +8,8 @@ abstract class MoneyInfoState with _$MoneyInfoState {
   const factory MoneyInfoState({
     @Default(false) bool isLoading,
     @Default(false) bool isReadyData,
-    List<MoneyInfoData> moneyInfoData,
+    List<AddMoneyInfoData> addMoneyInfoData,
+    List<TargetMoneyInfoData> targetMoneyInfoData,
+    @Default(0) int addMoneyResult,
   }) = _MoneyInfoState;
 }

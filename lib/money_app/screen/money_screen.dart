@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:youtube_demo/money_app/screen/current_money_form.dart';
+import 'package:youtube_demo/money_app/screen/add_money_form.dart';
 import 'package:youtube_demo/money_app/screen/money_screen_statenotifier.dart';
 import 'package:youtube_demo/money_app/screen/target_money_form.dart';
 
@@ -12,7 +12,6 @@ class MoneyScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final state = watch(moneyStateNotifier.state);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Chokin-app'),
@@ -54,11 +53,9 @@ class MoneyScreen extends ConsumerWidget {
             Container(
               alignment: Alignment.center,
               height: 100,
-              color: Colors.yellow,
               child: Text(
-                '',
+                '目標金額 :',
                 style: TextStyle(
-                  color: Colors.white,
                   fontSize: 26,
                 ),
               ),
@@ -66,11 +63,9 @@ class MoneyScreen extends ConsumerWidget {
             Container(
               alignment: Alignment.center,
               height: 100,
-              color: Colors.blueAccent,
               child: Text(
-                '合計金額: 8000円',
+                '合計金額 : ${CurrentMoneyForm.addMoneyResult.toString()}',
                 style: TextStyle(
-                  color: Colors.white,
                   fontSize: 26,
                 ),
               ),
@@ -78,11 +73,9 @@ class MoneyScreen extends ConsumerWidget {
             Container(
               alignment: Alignment.center,
               height: 100,
-              color: Colors.blueAccent,
               child: Text(
-                '差額金額: 2000円',
+                '差額金額 :',
                 style: TextStyle(
-                  color: Colors.white,
                   fontSize: 26,
                 ),
               ),
@@ -92,6 +85,4 @@ class MoneyScreen extends ConsumerWidget {
       ),
     );
   }
-
-  Widget _createBody() {}
 }

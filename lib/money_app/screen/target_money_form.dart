@@ -18,10 +18,11 @@ class TargetMoneyForm extends ConsumerWidget {
       ),
       body: SafeArea(
         child: Stack(
+          alignment: Alignment.topCenter,
           children: [
             Container(
               child: state.isReadyData
-                  ? _createBody(context, state.moneyInfoData)
+                  ? _createBody(context, state.targetMoneyInfoData)
                   : Container(),
             ),
             state.isLoading
@@ -32,7 +33,6 @@ class TargetMoneyForm extends ConsumerWidget {
                     ),
                   )
                 : Container(),
-            _createFormButton(context),
           ],
         ),
       ),
@@ -80,12 +80,9 @@ class TargetMoneyForm extends ConsumerWidget {
         ElevatedButton(
           child: Text('保存'),
           onPressed: () async {
-            var data = MoneyInfoData(
+            var data = TargetMoneyInfoData(
               id: null,
               targetMoney: int.tryParse(_targetMoneyCtrl.text),
-              currentMoney: 0,
-              differenceMoney: 0,
-              createdDate: '',
             );
             // var target = int.tryParse(_targetMoneyCtrl.text);
             if (_formKey.currentState.validate()) {
@@ -101,17 +98,24 @@ class TargetMoneyForm extends ConsumerWidget {
     );
   }
 
-  Widget _createBody(BuildContext context, List<MoneyInfoData> moneyInfoData) {
+  Widget _createBody(
+      BuildContext context, List<TargetMoneyInfoData> moneyInfoData) {
     return ListView.builder(
       itemCount: moneyInfoData.length,
       itemBuilder: (context, index) {
         final data = moneyInfoData[index];
-        return _buildTargetMoneyList(context, data);
+        return Column(
+          children: [
+            _createFormButton(context),
+            SizedBox(height: 20),
+            _buildTargetMoneyList(context, data),
+          ],
+        );
       },
     );
   }
 
-  Widget _buildTargetMoneyList(BuildContext context, MoneyInfoData data) {
+  Widget _buildTargetMoneyList(BuildContext context, TargetMoneyInfoData data) {
     return Container(
       child: Text('目標金額 : ${data.targetMoney.toString()}'),
     );

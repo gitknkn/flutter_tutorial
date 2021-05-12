@@ -8,23 +8,28 @@ import 'package:path_provider/path_provider.dart';
 
 part 'db.g.dart';
 
-class MoneyInfo extends Table {
+// 目標金額のモデル
+class TargetMoneyInfo extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get targetMoney => integer()();
-  IntColumn get currentMoney => integer()();
-  IntColumn get differenceMoney => integer()();
+}
+
+// 追加していく金額のモデル
+class AddMoneyInfo extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get addMoney => integer()();
   TextColumn get createdDate => text()();
 }
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite2'));
+    final file = File(p.join(dbFolder.path, 'db.sqlite3'));
     return VmDatabase(file);
   });
 }
 
-@UseMoor(tables: [MoneyInfo])
+@UseMoor(tables: [TargetMoneyInfo, AddMoneyInfo])
 class Database extends _$Database {
   Database() : super(_openConnection());
 
@@ -38,20 +43,48 @@ class Database extends _$Database {
   }
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
-  // MoneyInfoの全てのデーター取得
-  Future<List<MoneyInfoData>> allMoneyInfo() {
-    return select(moneyInfo).get();
+  // ここから TargetMoneyInfo
+  // データーの取得
+  // Stream<TargetMoneyInfoData> getTargetMoneyInfo(int id) {
+  //   return (select(targetMoneyInfo)..where((t) => t.id.equals(id)))
+  //       .watchSingle();
+  // }
+  Future<List<TargetMoneyInfoData>> allTargetMoneyInfo() {
+    return select(targetMoneyInfo).get();
+  }
+
+  Future<List<TargetMoneyInfoData>> limitAllTargetMoneyInfo(int limit, {int offset}) {
+    return (select(targetMoneyInfo)..limit(limit, offset: offset)).get();
   }
 
   // 追加
-  Future createMoneyInfo(MoneyInfoData data) {
-    return into(moneyInfo).insert(data);
+  Future createTargetMoneyInfo(TargetMoneyInfoData data) {
+    return into(targetMoneyInfo).insert(data);
   }
 
   // 削除
-  Future<int> deleteMoneyInfo(int id) {
-    return (delete(moneyInfo)..where((it) => it.id.equals(id))).go();
+  Future<int> deleteTargetMoneyInfo(int id) {
+    return (delete(targetMoneyInfo)..where((it) => it.id.equals(id))).go();
   }
+  // ここまで TargetMoneyInfo
+
+  // AddMoneyInfo ここから
+  // AddMoneyInfoの全てのデーター取得
+  Future<List<AddMoneyInfoData>> allAddMoneyInfo() {
+    return select(addMoneyInfo).get();
+  }
+
+  // 追加
+  Future createAddMoneyInfo(AddMoneyInfoData data) {
+    return into(addMoneyInfo).insert(data);
+  }
+
+  // 削除
+  Future<int> deleteAddMoneyInfo(int id) {
+    return (delete(addMoneyInfo)..where((it) => it.id.equals(id))).go();
+  }
+  // AddMoneyInfo ここまで
+
 }
