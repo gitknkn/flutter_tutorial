@@ -17,14 +17,16 @@ class _$MoneyInfoStateTearOff {
       {bool isLoading = false,
       bool isReadyData = false,
       List<AddMoneyInfoData> addMoneyInfoData,
-      List<TargetMoneyInfoData> targetMoneyInfoData,
-      int addMoneyResult = 0}) {
+      TargetMoneyInfoData targetMoneyInfoData,
+      int totalAddMoney = 0,
+      int differenceMoney = 0}) {
     return _MoneyInfoState(
       isLoading: isLoading,
       isReadyData: isReadyData,
       addMoneyInfoData: addMoneyInfoData,
       targetMoneyInfoData: targetMoneyInfoData,
-      addMoneyResult: addMoneyResult,
+      totalAddMoney: totalAddMoney,
+      differenceMoney: differenceMoney,
     );
   }
 }
@@ -36,8 +38,9 @@ mixin _$MoneyInfoState {
   bool get isLoading;
   bool get isReadyData;
   List<AddMoneyInfoData> get addMoneyInfoData;
-  List<TargetMoneyInfoData> get targetMoneyInfoData;
-  int get addMoneyResult;
+  TargetMoneyInfoData get targetMoneyInfoData;
+  int get totalAddMoney;
+  int get differenceMoney;
 
   $MoneyInfoStateCopyWith<MoneyInfoState> get copyWith;
 }
@@ -50,8 +53,9 @@ abstract class $MoneyInfoStateCopyWith<$Res> {
       {bool isLoading,
       bool isReadyData,
       List<AddMoneyInfoData> addMoneyInfoData,
-      List<TargetMoneyInfoData> targetMoneyInfoData,
-      int addMoneyResult});
+      TargetMoneyInfoData targetMoneyInfoData,
+      int totalAddMoney,
+      int differenceMoney});
 }
 
 class _$MoneyInfoStateCopyWithImpl<$Res>
@@ -68,7 +72,8 @@ class _$MoneyInfoStateCopyWithImpl<$Res>
     Object isReadyData = freezed,
     Object addMoneyInfoData = freezed,
     Object targetMoneyInfoData = freezed,
-    Object addMoneyResult = freezed,
+    Object totalAddMoney = freezed,
+    Object differenceMoney = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
@@ -79,10 +84,13 @@ class _$MoneyInfoStateCopyWithImpl<$Res>
           : addMoneyInfoData as List<AddMoneyInfoData>,
       targetMoneyInfoData: targetMoneyInfoData == freezed
           ? _value.targetMoneyInfoData
-          : targetMoneyInfoData as List<TargetMoneyInfoData>,
-      addMoneyResult: addMoneyResult == freezed
-          ? _value.addMoneyResult
-          : addMoneyResult as int,
+          : targetMoneyInfoData as TargetMoneyInfoData,
+      totalAddMoney: totalAddMoney == freezed
+          ? _value.totalAddMoney
+          : totalAddMoney as int,
+      differenceMoney: differenceMoney == freezed
+          ? _value.differenceMoney
+          : differenceMoney as int,
     ));
   }
 }
@@ -97,8 +105,9 @@ abstract class _$MoneyInfoStateCopyWith<$Res>
       {bool isLoading,
       bool isReadyData,
       List<AddMoneyInfoData> addMoneyInfoData,
-      List<TargetMoneyInfoData> targetMoneyInfoData,
-      int addMoneyResult});
+      TargetMoneyInfoData targetMoneyInfoData,
+      int totalAddMoney,
+      int differenceMoney});
 }
 
 class __$MoneyInfoStateCopyWithImpl<$Res>
@@ -117,7 +126,8 @@ class __$MoneyInfoStateCopyWithImpl<$Res>
     Object isReadyData = freezed,
     Object addMoneyInfoData = freezed,
     Object targetMoneyInfoData = freezed,
-    Object addMoneyResult = freezed,
+    Object totalAddMoney = freezed,
+    Object differenceMoney = freezed,
   }) {
     return _then(_MoneyInfoState(
       isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
@@ -128,10 +138,13 @@ class __$MoneyInfoStateCopyWithImpl<$Res>
           : addMoneyInfoData as List<AddMoneyInfoData>,
       targetMoneyInfoData: targetMoneyInfoData == freezed
           ? _value.targetMoneyInfoData
-          : targetMoneyInfoData as List<TargetMoneyInfoData>,
-      addMoneyResult: addMoneyResult == freezed
-          ? _value.addMoneyResult
-          : addMoneyResult as int,
+          : targetMoneyInfoData as TargetMoneyInfoData,
+      totalAddMoney: totalAddMoney == freezed
+          ? _value.totalAddMoney
+          : totalAddMoney as int,
+      differenceMoney: differenceMoney == freezed
+          ? _value.differenceMoney
+          : differenceMoney as int,
     ));
   }
 }
@@ -142,10 +155,12 @@ class _$_MoneyInfoState implements _MoneyInfoState {
       this.isReadyData = false,
       this.addMoneyInfoData,
       this.targetMoneyInfoData,
-      this.addMoneyResult = 0})
+      this.totalAddMoney = 0,
+      this.differenceMoney = 0})
       : assert(isLoading != null),
         assert(isReadyData != null),
-        assert(addMoneyResult != null);
+        assert(totalAddMoney != null),
+        assert(differenceMoney != null);
 
   @JsonKey(defaultValue: false)
   @override
@@ -156,14 +171,17 @@ class _$_MoneyInfoState implements _MoneyInfoState {
   @override
   final List<AddMoneyInfoData> addMoneyInfoData;
   @override
-  final List<TargetMoneyInfoData> targetMoneyInfoData;
+  final TargetMoneyInfoData targetMoneyInfoData;
   @JsonKey(defaultValue: 0)
   @override
-  final int addMoneyResult;
+  final int totalAddMoney;
+  @JsonKey(defaultValue: 0)
+  @override
+  final int differenceMoney;
 
   @override
   String toString() {
-    return 'MoneyInfoState(isLoading: $isLoading, isReadyData: $isReadyData, addMoneyInfoData: $addMoneyInfoData, targetMoneyInfoData: $targetMoneyInfoData, addMoneyResult: $addMoneyResult)';
+    return 'MoneyInfoState(isLoading: $isLoading, isReadyData: $isReadyData, addMoneyInfoData: $addMoneyInfoData, targetMoneyInfoData: $targetMoneyInfoData, totalAddMoney: $totalAddMoney, differenceMoney: $differenceMoney)';
   }
 
   @override
@@ -182,9 +200,12 @@ class _$_MoneyInfoState implements _MoneyInfoState {
             (identical(other.targetMoneyInfoData, targetMoneyInfoData) ||
                 const DeepCollectionEquality()
                     .equals(other.targetMoneyInfoData, targetMoneyInfoData)) &&
-            (identical(other.addMoneyResult, addMoneyResult) ||
+            (identical(other.totalAddMoney, totalAddMoney) ||
                 const DeepCollectionEquality()
-                    .equals(other.addMoneyResult, addMoneyResult)));
+                    .equals(other.totalAddMoney, totalAddMoney)) &&
+            (identical(other.differenceMoney, differenceMoney) ||
+                const DeepCollectionEquality()
+                    .equals(other.differenceMoney, differenceMoney)));
   }
 
   @override
@@ -194,7 +215,8 @@ class _$_MoneyInfoState implements _MoneyInfoState {
       const DeepCollectionEquality().hash(isReadyData) ^
       const DeepCollectionEquality().hash(addMoneyInfoData) ^
       const DeepCollectionEquality().hash(targetMoneyInfoData) ^
-      const DeepCollectionEquality().hash(addMoneyResult);
+      const DeepCollectionEquality().hash(totalAddMoney) ^
+      const DeepCollectionEquality().hash(differenceMoney);
 
   @override
   _$MoneyInfoStateCopyWith<_MoneyInfoState> get copyWith =>
@@ -206,8 +228,9 @@ abstract class _MoneyInfoState implements MoneyInfoState {
       {bool isLoading,
       bool isReadyData,
       List<AddMoneyInfoData> addMoneyInfoData,
-      List<TargetMoneyInfoData> targetMoneyInfoData,
-      int addMoneyResult}) = _$_MoneyInfoState;
+      TargetMoneyInfoData targetMoneyInfoData,
+      int totalAddMoney,
+      int differenceMoney}) = _$_MoneyInfoState;
 
   @override
   bool get isLoading;
@@ -216,9 +239,11 @@ abstract class _MoneyInfoState implements MoneyInfoState {
   @override
   List<AddMoneyInfoData> get addMoneyInfoData;
   @override
-  List<TargetMoneyInfoData> get targetMoneyInfoData;
+  TargetMoneyInfoData get targetMoneyInfoData;
   @override
-  int get addMoneyResult;
+  int get totalAddMoney;
+  @override
+  int get differenceMoney;
   @override
   _$MoneyInfoStateCopyWith<_MoneyInfoState> get copyWith;
 }

@@ -51,12 +51,19 @@ class Database extends _$Database {
   //   return (select(targetMoneyInfo)..where((t) => t.id.equals(id)))
   //       .watchSingle();
   // }
-  Future<List<TargetMoneyInfoData>> allTargetMoneyInfo() {
-    return select(targetMoneyInfo).get();
-  }
+  // Future<List<TargetMoneyInfoData>> allTargetMoneyInfo() {
+  //   return select(targetMoneyInfo).get();
+  // }
+  //
+  // 一行データーのみ取得(ミーティング前)
+  // Future<List<TargetMoneyInfoData>> limitAllTargetMoneyInfo(int limit,
+  //     {int offset}) {
+  //   return (select(targetMoneyInfo)..limit(limit, offset: offset)).get();
+  // }
 
-  Future<List<TargetMoneyInfoData>> limitAllTargetMoneyInfo(int limit, {int offset}) {
-    return (select(targetMoneyInfo)..limit(limit, offset: offset)).get();
+  // 一行データー取得(ミーティング後)
+  Future getTargetMoneyInfo(int id) {
+    return (select(targetMoneyInfo)..where((t) => t.id.equals(id))).getSingle();
   }
 
   // 追加
@@ -75,6 +82,13 @@ class Database extends _$Database {
   Future<List<AddMoneyInfoData>> allAddMoneyInfo() {
     return select(addMoneyInfo).get();
   }
+
+  // 様子見中
+  // Stream<int> totalAddMoneyData() {
+  //   final totalAddMoney = addMoneyInfo.addMoney.sum();
+  //   final query = selectOnly(addMoneyInfo)..addColumns([totalAddMoney]);
+  //   return query.map((row) => row.read(totalAddMoney)).watchSingle();
+  // }
 
   // 追加
   Future createAddMoneyInfo(AddMoneyInfoData data) {

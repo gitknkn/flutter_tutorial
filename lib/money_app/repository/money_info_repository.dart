@@ -12,14 +12,19 @@ class MoneyInfoRepository {
   // Stream<TargetMoneyInfoData> getTargetMoneyInfoData(int id) {
   //   return _myDatabase.getTargetMoneyInfo(id);
   // }
-  Future<List<TargetMoneyInfoData>> allTargetMoneyInfoData() async {
-    return await _myDatabase.allTargetMoneyInfo();
-  }
+  // Future<List<TargetMoneyInfoData>> allTargetMoneyInfoData() async {
+  //   return await _myDatabase.allTargetMoneyInfo();
+  // }
 
-  // 一行ののみデーターを取得
-  Future<List<TargetMoneyInfoData>> limitAllTargetMoneyInfoData(
-      int limit) async {
-    return await _myDatabase.limitAllTargetMoneyInfo(limit);
+  // 一行のみデーターを取得(ミーティング前)
+  // Future<List<TargetMoneyInfoData>> limitAllTargetMoneyInfoData(
+  //     int limit) async {
+  //   return await _myDatabase.limitAllTargetMoneyInfo(limit);
+  // }
+
+  // 一行のみデーターを取得(ミーティング後)
+  Future<TargetMoneyInfoData> getTargetMoneyInfoData(int id) async {
+    return await _myDatabase.getTargetMoneyInfo(id);
   }
 
   // 追加
@@ -48,6 +53,14 @@ class MoneyInfoRepository {
   Future deleteAddMoneyInfoData(int id) async {
     return await _myDatabase.deleteAddMoneyInfo(id);
   }
-  // AddMoneyInfo ここまで
 
+  Future<int> getTotalAddMoney() async {
+    final list = await _myDatabase.allAddMoneyInfo();
+    int savingMoney = 0;
+    for (int i = 0; i < list.length; i++) {
+      savingMoney += list[i].addMoney;
+    }
+    return savingMoney;
+  }
+  // AddMoneyInfo ここまで
 }

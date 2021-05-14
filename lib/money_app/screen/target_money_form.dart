@@ -11,7 +11,6 @@ class TargetMoneyForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final state = watch(moneyStateNotifier.state);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('目標金額入力フォーム'),
@@ -53,7 +52,7 @@ class TargetMoneyForm extends ConsumerWidget {
 
   Widget _buildFormDialog(BuildContext context) {
     TextEditingController _targetMoneyCtrl = TextEditingController();
-
+    // TextEditingController _idCtrl TextEditingController();
     return AlertDialog(
       content: Form(
         key: _formKey,
@@ -89,7 +88,6 @@ class TargetMoneyForm extends ConsumerWidget {
               await context
                   .read(moneyStateNotifier)
                   .writeTargetMoneyInfoData(data);
-              print(data.targetMoney);
               Navigator.pop(context);
             }
           },
@@ -98,26 +96,40 @@ class TargetMoneyForm extends ConsumerWidget {
     );
   }
 
-  Widget _createBody(
-      BuildContext context, List<TargetMoneyInfoData> moneyInfoData) {
-    return ListView.builder(
-      itemCount: moneyInfoData.length,
-      itemBuilder: (context, index) {
-        final data = moneyInfoData[index];
-        return Column(
-          children: [
-            _createFormButton(context),
-            SizedBox(height: 20),
-            _buildTargetMoneyList(context, data),
-          ],
-        );
-      },
+  Widget _createBody(BuildContext context, TargetMoneyInfoData data) {
+    return Column(
+      children: [
+        _createFormButton(context),
+        _buildTargetMoneyList(context),
+        SizedBox(height: 20),
+      ],
     );
   }
 
-  Widget _buildTargetMoneyList(BuildContext context, TargetMoneyInfoData data) {
-    return Container(
-      child: Text('目標金額 : ${data.targetMoney.toString()}'),
-    );
+  // Widget _createBody(BuildContext context, List<TargetMoneyInfoData> moneyInfoData) {
+  //   return ListView.builder(
+  //     itemCount: moneyInfoData.length,
+  //     itemBuilder: (context, index) {
+  //       final data = moneyInfoData[index];
+  //       return Column(
+  //         children: [
+  //           _createFormButton(context),
+  //           SizedBox(height: 20),
+  //           _buildTargetMoneyList(context, data),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+  //
+  Widget _buildTargetMoneyList(BuildContext context) {
+    return Consumer(builder: (context, watch, child) {
+      final state = watch(moneyStateNotifier.state);
+      return Container(
+        child: state.targetMoneyInfoData != null
+            ? Text(state.targetMoneyInfoData.targetMoney.toString())
+            : Text('なし'),
+      );
+    });
   }
 }

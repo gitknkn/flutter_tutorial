@@ -8,6 +8,8 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
     // 初期画面
     loadMoneyInfoData();
     loadTargetMoneyInfoData();
+    getTotalAddMoneyData();
+    getDifferenceMoney();
   }
 
   MoneyInfoRepository _repository = MoneyInfoRepository();
@@ -21,11 +23,11 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
 
   loadTargetMoneyInfoData() async {
     state = state.copyWith(isLoading: true);
-    final allData = await _repository.limitAllTargetMoneyInfoData(1);
+    final getTargetMoney = await _repository.getTargetMoneyInfoData(1);
     state = state.copyWith(
       isLoading: false,
       isReadyData: true,
-      targetMoneyInfoData: allData,
+      targetMoneyInfoData: getTargetMoney,
     );
   }
 
@@ -40,6 +42,8 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
     state = state.copyWith(isLoading: true);
     await _repository.createAddMoneyInfoData(data);
     loadMoneyInfoData();
+    getTotalAddMoneyData();
+    getDifferenceMoney();
   }
 
   loadMoneyInfoData() async {
@@ -50,6 +54,9 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
       isReadyData: true,
       addMoneyInfoData: allData,
     );
+    // ここに入れないと表示されない!
+    // getTotalAddMoneyData();
+    // getDifferenceMoney();
   }
 
   deleteMoneyInfoData(AddMoneyInfoData addMoneyInfoData) async {
@@ -57,17 +64,19 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
     await _repository.deleteAddMoneyInfoData(addMoneyInfoData.id);
     loadMoneyInfoData();
   }
-// AddMoneyInfo ここまで
+  // ここまで
 
-  // 現在は、使用していない
-  // writeAddMoneyResult(List<AddMoneyInfoData> addMoneyInfoData) {
-  //   var _list = addMoneyInfoData.length;
-  //   for (int i = 0; i < _list; i++) {
-  //     var result = 0;
-  //     result += addMoneyInfoData[i].addMoney;
-  //     state = state.copyWith(
-  //       addMoneyResult: result,
-  //     );
-  //   }
-  // }
+  getTotalAddMoneyData() async {
+    final getTotal = await _repository.getTotalAddMoney();
+    state = state.copyWith(totalAddMoney: getTotal);
+  }
+  // AddMoneyInfo ここまで
+
+  // 差額金額のロジック
+  getDifferenceMoney() async {
+    int _differenceMoney = 0;
+    final getTargetMoney = await _repository.getTargetMoneyInfoData(1);
+    _differenceMoney = getTargetMoney.targetMoney - state.totalAddMoney;
+    state = state.copyWith(differenceMoney: _differenceMoney);
+  }
 }

@@ -9,8 +9,6 @@ final moneyStateNotifier =
 
 class CurrentMoneyForm extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
-  static var addMoneyResult = 0;
-
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final state = watch(moneyStateNotifier.state);
@@ -54,7 +52,6 @@ class CurrentMoneyForm extends ConsumerWidget {
   Widget _buildFormDialog(BuildContext context) {
     TextEditingController _addMoneyCtrl = TextEditingController();
     final dateNow = DateTime.now();
-
     return AlertDialog(
       content: Form(
         key: _formKey,
@@ -90,14 +87,12 @@ class CurrentMoneyForm extends ConsumerWidget {
               addMoney: int.tryParse(_addMoneyCtrl.text),
               createdDate: formatter.format(dateNow),
             );
-
             if (_formKey.currentState.validate()) {
-              // await context
-              //     .read(moneyStateNotifier)
-              //     .writeAddMoneyResult(addMoneyInfoData);
               await context
                   .read(moneyStateNotifier)
                   .writeAddMoneyInfoData(data);
+              // await context.read(moneyStateNotifier).getTotalAddMoneyData();
+              // await context.read(moneyStateNotifier).getDifferenceMoney();
               Navigator.pop(context);
             }
           },
@@ -108,10 +103,7 @@ class CurrentMoneyForm extends ConsumerWidget {
 
   Widget _createBody(
       BuildContext context, List<AddMoneyInfoData> addMoneyInfoData) {
-    var _list = addMoneyInfoData.length;
-    for (int i = 0; i < _list; i++) {
-      addMoneyResult += addMoneyInfoData[i].addMoney;
-    }
+    // final state = watch(moneyStateNotifier.state);
     return ListView.builder(
       itemCount: addMoneyInfoData.length,
       itemBuilder: (context, index) {
@@ -120,15 +112,22 @@ class CurrentMoneyForm extends ConsumerWidget {
           return Column(
             children: [
               _createFormButton(context),
-              Text('合計金額 : ${addMoneyResult.toString()}'),
+              // Text('合計金額 : ${state.totalAddMoney.toString()}'),
+              Consumer(builder: (context, watch, child) {
+                final state = watch(moneyStateNotifier.state);
+                return Text('合計金額 : ${state.totalAddMoney.toString()}');
+              }),
               SizedBox(height: 20),
+              Divider(height: 0),
               _buildCurrentMoneyList(context, data),
             ],
           );
         } else {
           return Column(
             children: [
+              Divider(height: 0),
               _buildCurrentMoneyList(context, data),
+              Divider(height: 0)
             ],
           );
         }

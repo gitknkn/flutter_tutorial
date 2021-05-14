@@ -9,7 +9,9 @@ abstract class MoneyInfoState with _$MoneyInfoState {
     @Default(false) bool isLoading,
     @Default(false) bool isReadyData,
     List<AddMoneyInfoData> addMoneyInfoData,
-    List<TargetMoneyInfoData> targetMoneyInfoData,
-    @Default(0) int addMoneyResult,
+    TargetMoneyInfoData targetMoneyInfoData,
+    @Default(0) int totalAddMoney,
+    @Default(0) int differenceMoney,
+    // @Default(0) int addMoneyResult,
   }) = _MoneyInfoState;
 }

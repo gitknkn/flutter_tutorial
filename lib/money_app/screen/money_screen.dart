@@ -9,9 +9,21 @@ final moneyStateNotifier =
     StateNotifierProvider((ref) => MoneyInfoScreenStateNotifier());
 
 class MoneyScreen extends ConsumerWidget {
+  // void initState() {
+  //   super.initState();
+  // }
+  // MoneyScreen() : super() {
+  //
+  // }
+  // MoneyScreen({Key key}) : super(key: key);
+  // @override
+  // void initState() {
+  // }
+
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final state = watch(moneyStateNotifier.state);
+    var _differenceM = state.differenceMoney;
     return Scaffold(
       appBar: AppBar(
         title: Text('Chokin-app'),
@@ -54,7 +66,9 @@ class MoneyScreen extends ConsumerWidget {
               alignment: Alignment.center,
               height: 100,
               child: Text(
-                '目標金額 :',
+                state.targetMoneyInfoData != null
+                    ? '目標金額 : ${state.targetMoneyInfoData.targetMoney.toString()}'
+                    : '0',
                 style: TextStyle(
                   fontSize: 26,
                 ),
@@ -64,7 +78,7 @@ class MoneyScreen extends ConsumerWidget {
               alignment: Alignment.center,
               height: 100,
               child: Text(
-                '合計金額 : ${CurrentMoneyForm.addMoneyResult.toString()}',
+                '合計金額 : ${state.totalAddMoney.toString()}',
                 style: TextStyle(
                   fontSize: 26,
                 ),
@@ -74,7 +88,7 @@ class MoneyScreen extends ConsumerWidget {
               alignment: Alignment.center,
               height: 100,
               child: Text(
-                '差額金額 :',
+                '差額金額 : $_differenceM',
                 style: TextStyle(
                   fontSize: 26,
                 ),
