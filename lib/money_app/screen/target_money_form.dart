@@ -3,9 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_demo/money_app/db/db.dart';
 import 'package:youtube_demo/money_app/screen/money_screen_statenotifier.dart';
 
-final moneyStateNotifier =
-    StateNotifierProvider((ref) => MoneyInfoScreenStateNotifier());
-
 class TargetMoneyForm extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
   @override
@@ -80,14 +77,12 @@ class TargetMoneyForm extends ConsumerWidget {
           child: Text('保存'),
           onPressed: () async {
             var data = TargetMoneyInfoData(
-              id: null,
+              id: 1,
               targetMoney: int.tryParse(_targetMoneyCtrl.text),
             );
             // var target = int.tryParse(_targetMoneyCtrl.text);
             if (_formKey.currentState.validate()) {
-              await context
-                  .read(moneyStateNotifier)
-                  .writeTargetMoneyInfoData(data);
+              await context.read(moneyStateNotifier).updateMoneyInfoData(data);
               Navigator.pop(context);
             }
           },
@@ -100,36 +95,25 @@ class TargetMoneyForm extends ConsumerWidget {
     return Column(
       children: [
         _createFormButton(context),
-        _buildTargetMoneyList(context),
         SizedBox(height: 20),
+        _buildTargetMoneyList(context),
       ],
     );
   }
 
-  // Widget _createBody(BuildContext context, List<TargetMoneyInfoData> moneyInfoData) {
-  //   return ListView.builder(
-  //     itemCount: moneyInfoData.length,
-  //     itemBuilder: (context, index) {
-  //       final data = moneyInfoData[index];
-  //       return Column(
-  //         children: [
-  //           _createFormButton(context),
-  //           SizedBox(height: 20),
-  //           _buildTargetMoneyList(context, data),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-  //
   Widget _buildTargetMoneyList(BuildContext context) {
     return Consumer(builder: (context, watch, child) {
       final state = watch(moneyStateNotifier.state);
-      return Container(
-        child: state.targetMoneyInfoData != null
-            ? Text(state.targetMoneyInfoData.targetMoney.toString())
-            : Text('なし'),
-      );
+      return Column(children: [
+        Container(
+          child: state.targetMoneyInfoData != null
+              ? Text(
+                  '${state.targetMoneyInfoData.targetMoney.toString()}円',
+                  style: TextStyle(fontSize: 20, color: Colors.blueAccent),
+                )
+              : Text('なし'),
+        ),
+      ]);
     });
   }
 }

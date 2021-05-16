@@ -1,11 +1,9 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:youtube_demo/money_app/db/db.dart';
 import 'package:youtube_demo/money_app/screen/money_screen_statenotifier.dart';
-
-final moneyStateNotifier =
-    StateNotifierProvider((ref) => MoneyInfoScreenStateNotifier());
 
 class CurrentMoneyForm extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
@@ -18,7 +16,7 @@ class CurrentMoneyForm extends ConsumerWidget {
       ),
       body: SafeArea(
         child: Stack(
-          alignment: Alignment.topCenter,
+          // alignment: Alignment.topCenter,
           children: [
             state.isReadyData
                 ? _createBody(context, state.addMoneyInfoData)
@@ -34,6 +32,46 @@ class CurrentMoneyForm extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _createBody(
+      BuildContext context, List<AddMoneyInfoData> addMoneyInfoData) {
+    // final state = watch(moneyStateNotifier.state);
+    return ListView.builder(
+      itemCount: addMoneyInfoData.length,
+      itemBuilder: (context, index) {
+        final data = addMoneyInfoData[index];
+        if (index == 0) {
+          return Column(
+            children: [
+              _createFormButton(context),
+              SizedBox(height: 20),
+              // Text('合計金額 : ${state.totalAddMoney.toString()}'),
+              Consumer(builder: (context, watch, child) {
+                final state = watch(moneyStateNotifier.state);
+                return Text(
+                  '合計金額 : ${state.totalAddMoney.toString()}円',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                );
+              }),
+              SizedBox(height: 20),
+              Divider(height: 20),
+              _buildCurrentMoneyList(context, data),
+              Divider(height: 20),
+            ],
+          );
+        } else {
+          return Column(
+            children: [
+              _buildCurrentMoneyList(context, data),
+              Divider(height: 20),
+            ],
+          );
+        }
+      },
     );
   }
 
@@ -81,7 +119,7 @@ class CurrentMoneyForm extends ConsumerWidget {
         ElevatedButton(
           child: Text('保存'),
           onPressed: () async {
-            final formatter = DateFormat('yyyy-MM-dd');
+            final formatter = DateFormat('yy-MM-dd');
             var data = AddMoneyInfoData(
               id: null,
               addMoney: int.tryParse(_addMoneyCtrl.text),
@@ -91,8 +129,6 @@ class CurrentMoneyForm extends ConsumerWidget {
               await context
                   .read(moneyStateNotifier)
                   .writeAddMoneyInfoData(data);
-              // await context.read(moneyStateNotifier).getTotalAddMoneyData();
-              // await context.read(moneyStateNotifier).getDifferenceMoney();
               Navigator.pop(context);
             }
           },
@@ -101,68 +137,30 @@ class CurrentMoneyForm extends ConsumerWidget {
     );
   }
 
-  Widget _createBody(
-      BuildContext context, List<AddMoneyInfoData> addMoneyInfoData) {
-    // final state = watch(moneyStateNotifier.state);
-    return ListView.builder(
-      itemCount: addMoneyInfoData.length,
-      itemBuilder: (context, index) {
-        final data = addMoneyInfoData[index];
-        if (index == 0) {
-          return Column(
-            children: [
-              _createFormButton(context),
-              // Text('合計金額 : ${state.totalAddMoney.toString()}'),
-              Consumer(builder: (context, watch, child) {
-                final state = watch(moneyStateNotifier.state);
-                return Text('合計金額 : ${state.totalAddMoney.toString()}');
-              }),
-              SizedBox(height: 20),
-              Divider(height: 0),
-              _buildCurrentMoneyList(context, data),
-            ],
-          );
-        } else {
-          return Column(
-            children: [
-              Divider(height: 0),
-              _buildCurrentMoneyList(context, data),
-              Divider(height: 0)
-            ],
-          );
-        }
-      },
-    );
-  }
-
   Widget _buildCurrentMoneyList(BuildContext context, AddMoneyInfoData data) {
-    return Padding(
-      padding: EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('貯金額 : ${data.addMoney}'),
-          Text('日付 : ${data.createdDate.toString()}'),
-        ],
+    return Slidable(
+      actionPane: SlidableDrawerActionPane(),
+      actionExtentRatio: 0.2,
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text('貯金額 : ${data.addMoney}円'),
+            Text('日付 : ${data.createdDate.toString()}'),
+          ],
+        ),
       ),
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'delete',
+          color: Colors.redAccent,
+          icon: Icons.delete,
+          onTap: () {
+            context.read(moneyStateNotifier).deleteMoneyInfoData(data);
+          },
+        ),
+      ],
     );
   }
-
-  // int Function(BuildContext context, List<AddMoneyInfoData> addMoneyInfoData)
-  //     addMoneyResultt = (context, addMoneyInfoData) {
-  //   var _list = addMoneyInfoData.length;
-  //   for (int i = 0; i < _list; i++) {
-  //     addMoneyResult += addMoneyInfoData[i].addMoney;
-  //   }
-  //   return addMoneyResult;
-  // };
-
-  // int _buildAddMoney(
-  //     BuildContext context, List<AddMoneyInfoData> addMoneyInfoData) {
-  //   var _list = addMoneyInfoData.length;
-  //   for (int i = 0; i < _list; i++) {
-  //     addMoneyResult += addMoneyInfoData[i].addMoney;
-  //   }
-  //   return addMoneyResult;
-  // }
 }

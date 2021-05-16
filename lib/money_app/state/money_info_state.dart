@@ -12,6 +12,7 @@ abstract class MoneyInfoState with _$MoneyInfoState {
     TargetMoneyInfoData targetMoneyInfoData,
     @Default(0) int totalAddMoney,
     @Default(0) int differenceMoney,
-    // @Default(0) int addMoneyResult,
+
+    /// @Default(0) int addMoneyResult,
   }) = _MoneyInfoState;
 }

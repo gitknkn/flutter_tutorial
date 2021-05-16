@@ -32,6 +32,11 @@ class MoneyInfoRepository {
     return await _myDatabase.createTargetMoneyInfo(data);
   }
 
+  // 更新
+  Future updateTargetMoneyInfoData(TargetMoneyInfoData data) async {
+    return await _myDatabase.updateTargetMoneyInfo(data);
+  }
+
   //削除
   Future<int> deleteTargetMoneyInfoData(int id) async {
     return await _myDatabase.deleteAddMoneyInfo(id);
@@ -54,6 +59,12 @@ class MoneyInfoRepository {
     return await _myDatabase.deleteAddMoneyInfo(id);
   }
 
+  // 全件削除
+  Future allDeleteAddMoneyInfoData() async {
+    return await _myDatabase.allDeleteAddMoneyInfo();
+  }
+
+  // 差額金額のロジック部分
   Future<int> getTotalAddMoney() async {
     final list = await _myDatabase.allAddMoneyInfo();
     int savingMoney = 0;

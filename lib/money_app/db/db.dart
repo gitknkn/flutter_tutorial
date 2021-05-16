@@ -45,22 +45,6 @@ class Database extends _$Database {
   @override
   int get schemaVersion => 3;
 
-  // ここから TargetMoneyInfo
-  // データーの取得
-  // Stream<TargetMoneyInfoData> getTargetMoneyInfo(int id) {
-  //   return (select(targetMoneyInfo)..where((t) => t.id.equals(id)))
-  //       .watchSingle();
-  // }
-  // Future<List<TargetMoneyInfoData>> allTargetMoneyInfo() {
-  //   return select(targetMoneyInfo).get();
-  // }
-  //
-  // 一行データーのみ取得(ミーティング前)
-  // Future<List<TargetMoneyInfoData>> limitAllTargetMoneyInfo(int limit,
-  //     {int offset}) {
-  //   return (select(targetMoneyInfo)..limit(limit, offset: offset)).get();
-  // }
-
   // 一行データー取得(ミーティング後)
   Future getTargetMoneyInfo(int id) {
     return (select(targetMoneyInfo)..where((t) => t.id.equals(id))).getSingle();
@@ -69,6 +53,11 @@ class Database extends _$Database {
   // 追加
   Future createTargetMoneyInfo(TargetMoneyInfoData data) {
     return into(targetMoneyInfo).insert(data);
+  }
+
+  // 更新
+  Future updateTargetMoneyInfo(TargetMoneyInfoData data) {
+    return update(targetMoneyInfo).replace(data);
   }
 
   // 削除
@@ -83,13 +72,6 @@ class Database extends _$Database {
     return select(addMoneyInfo).get();
   }
 
-  // 様子見中
-  // Stream<int> totalAddMoneyData() {
-  //   final totalAddMoney = addMoneyInfo.addMoney.sum();
-  //   final query = selectOnly(addMoneyInfo)..addColumns([totalAddMoney]);
-  //   return query.map((row) => row.read(totalAddMoney)).watchSingle();
-  // }
-
   // 追加
   Future createAddMoneyInfo(AddMoneyInfoData data) {
     return into(addMoneyInfo).insert(data);
@@ -98,6 +80,11 @@ class Database extends _$Database {
   // 削除
   Future<int> deleteAddMoneyInfo(int id) {
     return (delete(addMoneyInfo)..where((it) => it.id.equals(id))).go();
+  }
+
+  // 全件削除
+  Future allDeleteAddMoneyInfo() {
+    return delete(addMoneyInfo).go();
   }
   // AddMoneyInfo ここまで
 

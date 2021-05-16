@@ -3,6 +3,9 @@ import 'package:youtube_demo/money_app/db/db.dart';
 import 'package:youtube_demo/money_app/repository/money_info_repository.dart';
 import 'package:youtube_demo/money_app/state/money_info_state.dart';
 
+final moneyStateNotifier =
+    StateNotifierProvider((ref) => MoneyInfoScreenStateNotifier());
+
 class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
   MoneyInfoScreenStateNotifier() : super(MoneyInfoState()) {
     // 初期画面
@@ -15,10 +18,17 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
   MoneyInfoRepository _repository = MoneyInfoRepository();
 
   // ここから TargetMoneyInfo
-  writeTargetMoneyInfoData(TargetMoneyInfoData data) async {
+  // writeTargetMoneyInfoData(TargetMoneyInfoData data) async {
+  //   state = state.copyWith(isLoading: true);
+  //   await _repository.createTargetMoneyInfoData(data);
+  //   loadTargetMoneyInfoData();
+  // }
+
+  updateMoneyInfoData(TargetMoneyInfoData data) async {
     state = state.copyWith(isLoading: true);
-    await _repository.createTargetMoneyInfoData(data);
+    await _repository.updateTargetMoneyInfoData(data);
     loadTargetMoneyInfoData();
+    getDifferenceMoney();
   }
 
   loadTargetMoneyInfoData() async {
@@ -54,25 +64,25 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
       isReadyData: true,
       addMoneyInfoData: allData,
     );
-    // ここに入れないと表示されない!
-    // getTotalAddMoneyData();
-    // getDifferenceMoney();
   }
 
   deleteMoneyInfoData(AddMoneyInfoData addMoneyInfoData) async {
     state = state.copyWith(isLoading: true);
     await _repository.deleteAddMoneyInfoData(addMoneyInfoData.id);
+    getTotalAddMoneyData();
+    getDifferenceMoney();
     loadMoneyInfoData();
   }
   // ここまで
 
+  /// 合計金額の取得
   getTotalAddMoneyData() async {
     final getTotal = await _repository.getTotalAddMoney();
     state = state.copyWith(totalAddMoney: getTotal);
   }
   // AddMoneyInfo ここまで
 
-  // 差額金額のロジック
+  /// 差額金額のロジックgetTotalAddMoneyData
   getDifferenceMoney() async {
     int _differenceMoney = 0;
     final getTargetMoney = await _repository.getTargetMoneyInfoData(1);
