@@ -13,6 +13,5 @@ abstract class MoneyInfoState with _$MoneyInfoState {
     @Default(0) int totalAddMoney,
     @Default(0) int differenceMoney,
     @Default(false) bool isMessageDialog,
-    // @Default(0) int addMoneyResult,
   }) = _MoneyInfoState;
 }

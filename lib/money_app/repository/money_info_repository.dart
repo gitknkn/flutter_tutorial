@@ -8,21 +8,7 @@ class MoneyInfoRepository {
   }
 
   // ここから TargetMoneyInfo
-  // データーの取得
-  // Stream<TargetMoneyInfoData> getTargetMoneyInfoData(int id) {
-  //   return _myDatabase.getTargetMoneyInfo(id);
-  // }
-  // Future<List<TargetMoneyInfoData>> allTargetMoneyInfoData() async {
-  //   return await _myDatabase.allTargetMoneyInfo();
-  // }
-
-  // 一行のみデーターを取得(ミーティング前)
-  // Future<List<TargetMoneyInfoData>> limitAllTargetMoneyInfoData(
-  //     int limit) async {
-  //   return await _myDatabase.limitAllTargetMoneyInfo(limit);
-  // }
-
-  // 一行のみデーターを取得(ミーティング後)
+  // 一行のみデーターを取得
   Future<TargetMoneyInfoData> getTargetMoneyInfoData(int id) async {
     return await _myDatabase.getTargetMoneyInfo(id);
   }

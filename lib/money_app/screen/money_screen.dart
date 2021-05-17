@@ -1,3 +1,4 @@
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,8 +12,6 @@ class MoneyScreen extends ConsumerWidget {
     final state = watch(moneyStateNotifier.state);
     var _differenceMoney = state.differenceMoney;
     var _totalMoney = state.totalAddMoney;
-    // var _targetMoney = state.targetMoneyInfoData.targetMoney;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('メイン画面'),
@@ -107,6 +106,8 @@ class MoneyScreen extends ConsumerWidget {
   }
 
   Widget _createShowDialog(BuildContext context) {
+    final _player = AudioCache();
+    _player.play('note1.wav');
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         return showDialog(
@@ -114,11 +115,12 @@ class MoneyScreen extends ConsumerWidget {
           builder: (_) {
             return AlertDialog(
               title: Text('目標金額達成！'),
-              content: Text('おめでとうございます'),
+              content: Text('おめでとうございます。'),
               actions: [
                 ElevatedButton(
                   child: Text('閉じる'),
                   onPressed: () {
+                    _player.play('note7.wav');
                     Navigator.pop(context);
                   },
                 )

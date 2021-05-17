@@ -16,9 +16,7 @@ class CurrentMoneyForm extends ConsumerWidget {
       ),
       body: SafeArea(
         child: Stack(
-          // alignment: Alignment.topCenter,
           children: [
-            // 動作確認中
             state.isReadyData
                 ? _createBody(context, state.addMoneyInfoData, watch)
                 : Container(),
@@ -44,7 +42,6 @@ class CurrentMoneyForm extends ConsumerWidget {
         child: _createFormButton(context),
       );
     }
-    final state = watch(moneyStateNotifier.state);
     return ListView.builder(
       itemCount: addMoneyInfoData.length,
       itemBuilder: (context, index) {
@@ -52,10 +49,17 @@ class CurrentMoneyForm extends ConsumerWidget {
         if (index == 0) {
           return Column(
             children: [
-              // state.isMessageDialog ? _createShowDailog(context) : Container(),
               _createFormButton(context),
+              ElevatedButton(
+                onPressed: () {
+                  context.read(moneyStateNotifier).allDeleteInfoData();
+                },
+                child: Text('全件削除'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
+              ),
               SizedBox(height: 20),
-              // Text('合計金額 : ${state.totalAddMoney.toString()}'),
               Consumer(
                 builder: (context, watch, child) {
                   final state = watch(moneyStateNotifier.state);
@@ -167,8 +171,8 @@ class CurrentMoneyForm extends ConsumerWidget {
       ),
       secondaryActions: <Widget>[
         IconSlideAction(
-          caption: 'delete',
-          color: Colors.redAccent,
+          caption: '削除',
+          color: Colors.red,
           icon: Icons.delete,
           onTap: () {
             context.read(moneyStateNotifier).deleteMoneyInfoData(data);
@@ -177,28 +181,4 @@ class CurrentMoneyForm extends ConsumerWidget {
       ],
     );
   }
-
-  // Widget _createShowDialog(BuildContext context) {
-  //   WidgetsBinding.instance.addPostFrameCallback(
-  //     (_) {
-  //       return showDialog(
-  //         context: context,
-  //         builder: (_) {
-  //           return AlertDialog(
-  //             title: Text('目標金額達成！'),
-  //             content: Text('おめでとうございます'),
-  //             actions: [
-  //               ElevatedButton(
-  //                 child: Text('閉じる'),
-  //                 onPressed: () {
-  //                   Navigator.pop(context);
-  //                 },
-  //               )
-  //             ],
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
 }
