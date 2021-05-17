@@ -10,6 +10,9 @@ class MoneyScreen extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     final state = watch(moneyStateNotifier.state);
     var _differenceMoney = state.differenceMoney;
+    var _totalMoney = state.totalAddMoney;
+    // var _targetMoney = state.targetMoneyInfoData.targetMoney;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('メイン画面'),
@@ -55,10 +58,10 @@ class MoneyScreen extends ConsumerWidget {
               height: 100,
               child: Text(
                 state.targetMoneyInfoData != null
-                    ? '目標金額 : ${state.targetMoneyInfoData.targetMoney.toString()}'
+                    ? '目標金額 : ${state.targetMoneyInfoData.targetMoney.toString()}円'
                     : '0',
                 style: TextStyle(
-                  fontSize: 26,
+                  fontSize: 22,
                 ),
               ),
             ),
@@ -72,9 +75,9 @@ class MoneyScreen extends ConsumerWidget {
               alignment: Alignment.center,
               height: 100,
               child: Text(
-                '合計金額 : ${state.totalAddMoney.toString()}',
+                '合計金額 : $_totalMoney円',
                 style: TextStyle(
-                  fontSize: 26,
+                  fontSize: 22,
                 ),
               ),
             ),
@@ -83,15 +86,47 @@ class MoneyScreen extends ConsumerWidget {
               alignment: Alignment.center,
               height: 100,
               child: Text(
-                '差額金額 : $_differenceMoney',
+                state.isMessageDialog
+                    ? '目標金額達成です。'
+                        '\nおめでとうございます！'
+                    : '差額金額 : $_differenceMoney円',
                 style: TextStyle(
-                  fontSize: 26,
+                  fontSize: 22,
                 ),
               ),
             ),
+
+            /// ここに配置したら、add_money_form側で表示されるようになった？？
+            state.isMessageDialog
+                ? Center(child: _createShowDialog(context))
+                : Container(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _createShowDialog(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        return showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text('目標金額達成！'),
+              content: Text('おめでとうございます'),
+              actions: [
+                ElevatedButton(
+                  child: Text('閉じる'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

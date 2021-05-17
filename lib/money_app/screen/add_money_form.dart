@@ -18,8 +18,9 @@ class CurrentMoneyForm extends ConsumerWidget {
         child: Stack(
           // alignment: Alignment.topCenter,
           children: [
+            // 動作確認中
             state.isReadyData
-                ? _createBody(context, state.addMoneyInfoData)
+                ? _createBody(context, state.addMoneyInfoData, watch)
                 : Container(),
             state.isLoading
                 ? Container(
@@ -35,9 +36,15 @@ class CurrentMoneyForm extends ConsumerWidget {
     );
   }
 
-  Widget _createBody(
-      BuildContext context, List<AddMoneyInfoData> addMoneyInfoData) {
-    // final state = watch(moneyStateNotifier.state);
+  Widget _createBody(BuildContext context,
+      List<AddMoneyInfoData> addMoneyInfoData, ScopedReader watch) {
+    if (addMoneyInfoData.isEmpty) {
+      return Container(
+        alignment: Alignment.topCenter,
+        child: _createFormButton(context),
+      );
+    }
+    final state = watch(moneyStateNotifier.state);
     return ListView.builder(
       itemCount: addMoneyInfoData.length,
       itemBuilder: (context, index) {
@@ -45,18 +52,21 @@ class CurrentMoneyForm extends ConsumerWidget {
         if (index == 0) {
           return Column(
             children: [
+              // state.isMessageDialog ? _createShowDailog(context) : Container(),
               _createFormButton(context),
               SizedBox(height: 20),
               // Text('合計金額 : ${state.totalAddMoney.toString()}'),
-              Consumer(builder: (context, watch, child) {
-                final state = watch(moneyStateNotifier.state);
-                return Text(
-                  '合計金額 : ${state.totalAddMoney.toString()}円',
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                );
-              }),
+              Consumer(
+                builder: (context, watch, child) {
+                  final state = watch(moneyStateNotifier.state);
+                  return Text(
+                    '合計金額 : ${state.totalAddMoney.toString()}円',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  );
+                },
+              ),
               SizedBox(height: 20),
               Divider(height: 20),
               _buildCurrentMoneyList(context, data),
@@ -64,10 +74,14 @@ class CurrentMoneyForm extends ConsumerWidget {
             ],
           );
         } else {
-          return Column(
+          return Stack(
             children: [
-              _buildCurrentMoneyList(context, data),
-              Divider(height: 20),
+              Column(
+                children: [
+                  _buildCurrentMoneyList(context, data),
+                  Divider(height: 20),
+                ],
+              ),
             ],
           );
         }
@@ -163,4 +177,28 @@ class CurrentMoneyForm extends ConsumerWidget {
       ],
     );
   }
+
+  // Widget _createShowDialog(BuildContext context) {
+  //   WidgetsBinding.instance.addPostFrameCallback(
+  //     (_) {
+  //       return showDialog(
+  //         context: context,
+  //         builder: (_) {
+  //           return AlertDialog(
+  //             title: Text('目標金額達成！'),
+  //             content: Text('おめでとうございます'),
+  //             actions: [
+  //               ElevatedButton(
+  //                 child: Text('閉じる'),
+  //                 onPressed: () {
+  //                   Navigator.pop(context);
+  //                 },
+  //               )
+  //             ],
+  //           );
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 }

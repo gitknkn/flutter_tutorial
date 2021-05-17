@@ -19,7 +19,8 @@ class _$MoneyInfoStateTearOff {
       List<AddMoneyInfoData> addMoneyInfoData,
       TargetMoneyInfoData targetMoneyInfoData,
       int totalAddMoney = 0,
-      int differenceMoney = 0}) {
+      int differenceMoney = 0,
+      bool isMessageDialog = false}) {
     return _MoneyInfoState(
       isLoading: isLoading,
       isReadyData: isReadyData,
@@ -27,6 +28,7 @@ class _$MoneyInfoStateTearOff {
       targetMoneyInfoData: targetMoneyInfoData,
       totalAddMoney: totalAddMoney,
       differenceMoney: differenceMoney,
+      isMessageDialog: isMessageDialog,
     );
   }
 }
@@ -41,6 +43,7 @@ mixin _$MoneyInfoState {
   TargetMoneyInfoData get targetMoneyInfoData;
   int get totalAddMoney;
   int get differenceMoney;
+  bool get isMessageDialog;
 
   $MoneyInfoStateCopyWith<MoneyInfoState> get copyWith;
 }
@@ -55,7 +58,8 @@ abstract class $MoneyInfoStateCopyWith<$Res> {
       List<AddMoneyInfoData> addMoneyInfoData,
       TargetMoneyInfoData targetMoneyInfoData,
       int totalAddMoney,
-      int differenceMoney});
+      int differenceMoney,
+      bool isMessageDialog});
 }
 
 class _$MoneyInfoStateCopyWithImpl<$Res>
@@ -74,6 +78,7 @@ class _$MoneyInfoStateCopyWithImpl<$Res>
     Object targetMoneyInfoData = freezed,
     Object totalAddMoney = freezed,
     Object differenceMoney = freezed,
+    Object isMessageDialog = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
@@ -91,6 +96,9 @@ class _$MoneyInfoStateCopyWithImpl<$Res>
       differenceMoney: differenceMoney == freezed
           ? _value.differenceMoney
           : differenceMoney as int,
+      isMessageDialog: isMessageDialog == freezed
+          ? _value.isMessageDialog
+          : isMessageDialog as bool,
     ));
   }
 }
@@ -107,7 +115,8 @@ abstract class _$MoneyInfoStateCopyWith<$Res>
       List<AddMoneyInfoData> addMoneyInfoData,
       TargetMoneyInfoData targetMoneyInfoData,
       int totalAddMoney,
-      int differenceMoney});
+      int differenceMoney,
+      bool isMessageDialog});
 }
 
 class __$MoneyInfoStateCopyWithImpl<$Res>
@@ -128,6 +137,7 @@ class __$MoneyInfoStateCopyWithImpl<$Res>
     Object targetMoneyInfoData = freezed,
     Object totalAddMoney = freezed,
     Object differenceMoney = freezed,
+    Object isMessageDialog = freezed,
   }) {
     return _then(_MoneyInfoState(
       isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
@@ -145,6 +155,9 @@ class __$MoneyInfoStateCopyWithImpl<$Res>
       differenceMoney: differenceMoney == freezed
           ? _value.differenceMoney
           : differenceMoney as int,
+      isMessageDialog: isMessageDialog == freezed
+          ? _value.isMessageDialog
+          : isMessageDialog as bool,
     ));
   }
 }
@@ -156,11 +169,13 @@ class _$_MoneyInfoState implements _MoneyInfoState {
       this.addMoneyInfoData,
       this.targetMoneyInfoData,
       this.totalAddMoney = 0,
-      this.differenceMoney = 0})
+      this.differenceMoney = 0,
+      this.isMessageDialog = false})
       : assert(isLoading != null),
         assert(isReadyData != null),
         assert(totalAddMoney != null),
-        assert(differenceMoney != null);
+        assert(differenceMoney != null),
+        assert(isMessageDialog != null);
 
   @JsonKey(defaultValue: false)
   @override
@@ -178,10 +193,13 @@ class _$_MoneyInfoState implements _MoneyInfoState {
   @JsonKey(defaultValue: 0)
   @override
   final int differenceMoney;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool isMessageDialog;
 
   @override
   String toString() {
-    return 'MoneyInfoState(isLoading: $isLoading, isReadyData: $isReadyData, addMoneyInfoData: $addMoneyInfoData, targetMoneyInfoData: $targetMoneyInfoData, totalAddMoney: $totalAddMoney, differenceMoney: $differenceMoney)';
+    return 'MoneyInfoState(isLoading: $isLoading, isReadyData: $isReadyData, addMoneyInfoData: $addMoneyInfoData, targetMoneyInfoData: $targetMoneyInfoData, totalAddMoney: $totalAddMoney, differenceMoney: $differenceMoney, isMessageDialog: $isMessageDialog)';
   }
 
   @override
@@ -205,7 +223,10 @@ class _$_MoneyInfoState implements _MoneyInfoState {
                     .equals(other.totalAddMoney, totalAddMoney)) &&
             (identical(other.differenceMoney, differenceMoney) ||
                 const DeepCollectionEquality()
-                    .equals(other.differenceMoney, differenceMoney)));
+                    .equals(other.differenceMoney, differenceMoney)) &&
+            (identical(other.isMessageDialog, isMessageDialog) ||
+                const DeepCollectionEquality()
+                    .equals(other.isMessageDialog, isMessageDialog)));
   }
 
   @override
@@ -216,7 +237,8 @@ class _$_MoneyInfoState implements _MoneyInfoState {
       const DeepCollectionEquality().hash(addMoneyInfoData) ^
       const DeepCollectionEquality().hash(targetMoneyInfoData) ^
       const DeepCollectionEquality().hash(totalAddMoney) ^
-      const DeepCollectionEquality().hash(differenceMoney);
+      const DeepCollectionEquality().hash(differenceMoney) ^
+      const DeepCollectionEquality().hash(isMessageDialog);
 
   @override
   _$MoneyInfoStateCopyWith<_MoneyInfoState> get copyWith =>
@@ -230,7 +252,8 @@ abstract class _MoneyInfoState implements MoneyInfoState {
       List<AddMoneyInfoData> addMoneyInfoData,
       TargetMoneyInfoData targetMoneyInfoData,
       int totalAddMoney,
-      int differenceMoney}) = _$_MoneyInfoState;
+      int differenceMoney,
+      bool isMessageDialog}) = _$_MoneyInfoState;
 
   @override
   bool get isLoading;
@@ -244,6 +267,8 @@ abstract class _MoneyInfoState implements MoneyInfoState {
   int get totalAddMoney;
   @override
   int get differenceMoney;
+  @override
+  bool get isMessageDialog;
   @override
   _$MoneyInfoStateCopyWith<_MoneyInfoState> get copyWith;
 }

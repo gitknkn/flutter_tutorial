@@ -54,6 +54,9 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
     loadMoneyInfoData();
     getTotalAddMoneyData();
     getDifferenceMoney();
+
+    /// 目標金額達成表示の確認
+    isShowDialogMessage();
   }
 
   loadMoneyInfoData() async {
@@ -70,6 +73,7 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
     state = state.copyWith(isLoading: true);
     await _repository.deleteAddMoneyInfoData(addMoneyInfoData.id);
     getTotalAddMoneyData();
+    isShowDialogMessage(); // 目標金額達成表示の確認
     getDifferenceMoney();
     loadMoneyInfoData();
   }
@@ -88,5 +92,16 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
     final getTargetMoney = await _repository.getTargetMoneyInfoData(1);
     _differenceMoney = getTargetMoney.targetMoney - state.totalAddMoney;
     state = state.copyWith(differenceMoney: _differenceMoney);
+  }
+
+  /// メッセージダイアログ表示判定ロジック
+  isShowDialogMessage() async {
+    final getTargetMoney = await _repository.getTargetMoneyInfoData(1);
+    if (getTargetMoney.targetMoney <= state.totalAddMoney) {
+      state = state.copyWith(isMessageDialog: true);
+    }
+    if (getTargetMoney.targetMoney >= state.totalAddMoney) {
+      state = state.copyWith(isMessageDialog: false);
+    }
   }
 }

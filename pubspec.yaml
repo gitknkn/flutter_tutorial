@@ -33,7 +33,6 @@ dependencies:
 #  flutter_datetime_picker: ^1.1.1
   date_time_picker: ^1.1.1
   flutter_form_builder: ^4.2.0
-
   badges: ^1.2.0
 
 dev_dependencies:
