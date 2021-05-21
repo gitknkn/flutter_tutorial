@@ -111,20 +111,19 @@ class CurrentMoneyForm extends ConsumerWidget {
     return AlertDialog(
       content: Form(
         key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TextFormField(
-              controller: _addMoneyCtrl,
-              decoration: const InputDecoration(
-                hintText: '貯金金額を入力して下さい',
-                labelText: '貯金額',
-              ),
-              validator: (String value) {
-                return value.isEmpty ? '貯金金額を入力して下さい' : null;
-              },
+        child: Container(
+          height: 100,
+          alignment: Alignment.center,
+          child: TextFormField(
+            controller: _addMoneyCtrl,
+            decoration: const InputDecoration(
+              hintText: '貯金金額を入力して下さい',
+              labelText: '貯金額',
             ),
-          ],
+            validator: (String value) {
+              return value.isEmpty ? '貯金金額を入力して下さい' : null;
+            },
+          ),
         ),
       ),
       actions: [

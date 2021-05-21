@@ -94,8 +94,8 @@ class TargetMoneyInfoCompanion extends UpdateCompanion<TargetMoneyInfoData> {
   });
   TargetMoneyInfoCompanion.insert({
     this.id = const Value.absent(),
-    @required int targetMoney,
-  }) : targetMoney = Value(targetMoney);
+    this.targetMoney = const Value.absent(),
+  });
   static Insertable<TargetMoneyInfoData> custom({
     Expression<int> id,
     Expression<int> targetMoney,
@@ -146,7 +146,7 @@ class $TargetMoneyInfoTable extends TargetMoneyInfo
   GeneratedIntColumn get id => _id ??= _constructId();
   GeneratedIntColumn _constructId() {
     return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+        defaultValue: Constant(1));
   }
 
   final VerificationMeta _targetMoneyMeta =
@@ -156,11 +156,8 @@ class $TargetMoneyInfoTable extends TargetMoneyInfo
   GeneratedIntColumn get targetMoney =>
       _targetMoney ??= _constructTargetMoney();
   GeneratedIntColumn _constructTargetMoney() {
-    return GeneratedIntColumn(
-      'target_money',
-      $tableName,
-      false,
-    );
+    return GeneratedIntColumn('target_money', $tableName, false,
+        defaultValue: Constant(0));
   }
 
   @override
@@ -185,14 +182,12 @@ class $TargetMoneyInfoTable extends TargetMoneyInfo
           _targetMoneyMeta,
           targetMoney.isAcceptableOrUnknown(
               data['target_money'], _targetMoneyMeta));
-    } else if (isInserting) {
-      context.missing(_targetMoneyMeta);
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
   @override
   TargetMoneyInfoData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;

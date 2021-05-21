@@ -8,9 +8,13 @@ import 'package:path_provider/path_provider.dart';
 part 'db.g.dart';
 
 // 目標金額のモデル
+// class TargetMoneyInfo extends Table {
+//   IntColumn get id => integer().autoIncrement()();
+//   IntColumn get targetMoney => integer()();
+// }
 class TargetMoneyInfo extends Table {
-  IntColumn get id => integer().autoIncrement()();
-  IntColumn get targetMoney => integer()();
+  IntColumn get id => integer().withDefault(Constant(1))();
+  IntColumn get targetMoney => integer().withDefault(Constant(0))();
 }
 
 // 追加していく金額のモデル

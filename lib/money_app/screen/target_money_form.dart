@@ -49,7 +49,6 @@ class TargetMoneyForm extends ConsumerWidget {
 
   Widget _buildFormDialog(BuildContext context) {
     TextEditingController _targetMoneyCtrl = TextEditingController();
-    // TextEditingController _idCtrl TextEditingController();
     return AlertDialog(
       content: Form(
         key: _formKey,
@@ -82,7 +81,9 @@ class TargetMoneyForm extends ConsumerWidget {
             );
             // var target = int.tryParse(_targetMoneyCtrl.text);
             if (_formKey.currentState.validate()) {
-              await context.read(moneyStateNotifier).updateMoneyInfoData(data);
+              await context
+                  .read(moneyStateNotifier)
+                  .writeTargetMoneyInfoData(data);
               Navigator.pop(context);
             }
           },
@@ -96,24 +97,42 @@ class TargetMoneyForm extends ConsumerWidget {
       children: [
         _createFormButton(context),
         SizedBox(height: 20),
-        _buildTargetMoneyList(context),
+        _buildTargetMoneyList(context, data),
       ],
     );
   }
 
-  Widget _buildTargetMoneyList(BuildContext context) {
-    return Consumer(builder: (context, watch, child) {
-      final state = watch(moneyStateNotifier.state);
-      return Column(children: [
-        Container(
-          child: state.targetMoneyInfoData != null
-              ? Text(
-                  '${state.targetMoneyInfoData.targetMoney.toString()}円',
-                  style: TextStyle(fontSize: 20, color: Colors.blueAccent),
-                )
-              : Text('なし'),
-        ),
-      ]);
-    });
+  Widget _buildTargetMoneyList(BuildContext context, TargetMoneyInfoData data) {
+    return Consumer(
+      builder: (context, watch, child) {
+        final state = watch(moneyStateNotifier.state);
+        return Column(
+          children: [
+            Container(
+              child: state.targetMoneyInfoData != null
+                  ? Text(
+                      '${state.targetMoneyInfoData.targetMoney.toString()}円',
+                      style: TextStyle(fontSize: 20, color: Colors.blueAccent),
+                    )
+                  : Text('目標金額を入力して下さい。'),
+            ),
+            SizedBox(height: 20),
+            state.targetMoneyInfoData != null
+                ? ElevatedButton(
+                    onPressed: () {
+                      context
+                          .read(moneyStateNotifier)
+                          .deleteTargetMoneyInfoData(data);
+                    },
+                    child: Text('削除'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                    ),
+                  )
+                : Container(),
+          ],
+        );
+      },
+    );
   }
 }

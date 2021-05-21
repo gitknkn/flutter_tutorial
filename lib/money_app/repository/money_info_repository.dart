@@ -25,7 +25,7 @@ class MoneyInfoRepository {
 
   //削除
   Future<int> deleteTargetMoneyInfoData(int id) async {
-    return await _myDatabase.deleteAddMoneyInfo(id);
+    return await _myDatabase.deleteTargetMoneyInfo(id);
   }
   // ここまで TargetMoneyInfo
 

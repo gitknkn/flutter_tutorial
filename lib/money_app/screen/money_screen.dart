@@ -58,7 +58,7 @@ class MoneyScreen extends ConsumerWidget {
               child: Text(
                 state.targetMoneyInfoData != null
                     ? '目標金額 : ${state.targetMoneyInfoData.targetMoney.toString()}円'
-                    : '0',
+                    : '目標金額 : 0円',
                 style: TextStyle(
                   fontSize: 22,
                 ),
@@ -95,7 +95,7 @@ class MoneyScreen extends ConsumerWidget {
               ),
             ),
 
-            /// ここに配置したら、add_money_form側で表示されるようになった？？
+            /// ここに配置したら、add_money_form側で表示されるようになった
             state.isMessageDialog
                 ? Center(child: _createShowDialog(context))
                 : Container(),
