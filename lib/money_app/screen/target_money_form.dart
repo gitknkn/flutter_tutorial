@@ -79,7 +79,6 @@ class TargetMoneyForm extends ConsumerWidget {
               id: 1,
               targetMoney: int.tryParse(_targetMoneyCtrl.text),
             );
-            // var target = int.tryParse(_targetMoneyCtrl.text);
             if (_formKey.currentState.validate()) {
               await context
                   .read(moneyStateNotifier)

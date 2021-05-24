@@ -8,10 +8,6 @@ import 'package:path_provider/path_provider.dart';
 part 'db.g.dart';
 
 // 目標金額のモデル
-// class TargetMoneyInfo extends Table {
-//   IntColumn get id => integer().autoIncrement()();
-//   IntColumn get targetMoney => integer()();
-// }
 class TargetMoneyInfo extends Table {
   IntColumn get id => integer().withDefault(Constant(1))();
   IntColumn get targetMoney => integer().withDefault(Constant(0))();
@@ -48,7 +44,8 @@ class Database extends _$Database {
   @override
   int get schemaVersion => 3;
 
-  // 一行データー取得(ミーティング後)
+  // ここから TargetMoneyInfo
+  // 一行データー取得
   Future getTargetMoneyInfo(int id) {
     return (select(targetMoneyInfo)..where((t) => t.id.equals(id))).getSingle();
   }
@@ -58,18 +55,13 @@ class Database extends _$Database {
     return into(targetMoneyInfo).insert(data);
   }
 
-  // 更新
-  Future updateTargetMoneyInfo(TargetMoneyInfoData data) {
-    return update(targetMoneyInfo).replace(data);
-  }
-
   // 削除
   Future<int> deleteTargetMoneyInfo(int id) {
     return (delete(targetMoneyInfo)..where((it) => it.id.equals(id))).go();
   }
   // ここまで TargetMoneyInfo
 
-  // AddMoneyInfo ここから
+  // ここから AddMoneyInfo
   // AddMoneyInfoの全てのデーター取得
   Future<List<AddMoneyInfoData>> allAddMoneyInfo() {
     return select(addMoneyInfo).get();
@@ -89,6 +81,5 @@ class Database extends _$Database {
   Future allDeleteAddMoneyInfo() {
     return delete(addMoneyInfo).go();
   }
-  // AddMoneyInfo ここまで
-
+  // ここまで AddMoneyInfo
 }

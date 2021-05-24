@@ -10,8 +10,6 @@ class MoneyScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final state = watch(moneyStateNotifier.state);
-    var _differenceMoney = state.differenceMoney;
-    var _totalMoney = state.totalAddMoney;
     return Scaffold(
       appBar: AppBar(
         title: Text('メイン画面'),
@@ -74,7 +72,7 @@ class MoneyScreen extends ConsumerWidget {
               alignment: Alignment.center,
               height: 100,
               child: Text(
-                '合計金額 : $_totalMoney円',
+                '合計金額 : ${state.totalAddMoney.toString()}円',
                 style: TextStyle(
                   fontSize: 22,
                 ),
@@ -88,14 +86,12 @@ class MoneyScreen extends ConsumerWidget {
                 state.isMessageDialog
                     ? '目標金額達成です。'
                         '\nおめでとうございます！'
-                    : '差額金額 : $_differenceMoney円',
+                    : '差額金額 : ${state.differenceMoney.toString()}円',
                 style: TextStyle(
                   fontSize: 22,
                 ),
               ),
             ),
-
-            /// ここに配置したら、add_money_form側で表示されるようになった
             state.isMessageDialog
                 ? Center(child: _createShowDialog(context))
                 : Container(),
@@ -123,7 +119,7 @@ class MoneyScreen extends ConsumerWidget {
                     _player.play('note7.wav');
                     Navigator.pop(context);
                   },
-                )
+                ),
               ],
             );
           },

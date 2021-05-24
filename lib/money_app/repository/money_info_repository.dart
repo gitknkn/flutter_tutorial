@@ -18,18 +18,13 @@ class MoneyInfoRepository {
     return await _myDatabase.createTargetMoneyInfo(data);
   }
 
-  // 更新
-  Future updateTargetMoneyInfoData(TargetMoneyInfoData data) async {
-    return await _myDatabase.updateTargetMoneyInfo(data);
-  }
-
   //削除
   Future<int> deleteTargetMoneyInfoData(int id) async {
     return await _myDatabase.deleteTargetMoneyInfo(id);
   }
   // ここまで TargetMoneyInfo
 
-  // AddMoneyInfo ここから
+  // ここから AddMoneyInfo
   // AddMoneyInfoの全てのデーター取得
   Future<List<AddMoneyInfoData>> allAddMoneyInfoData() async {
     return await _myDatabase.allAddMoneyInfo();
@@ -49,8 +44,9 @@ class MoneyInfoRepository {
   Future allDeleteAddMoneyInfoData() async {
     return await _myDatabase.allDeleteAddMoneyInfo();
   }
+  // ここまで AddMoneyInfo
 
-  // 差額金額のロジック部分
+  // 差額金額のロジック
   Future<int> getTotalAddMoney() async {
     final list = await _myDatabase.allAddMoneyInfo();
     int savingMoney = 0;
@@ -59,5 +55,4 @@ class MoneyInfoRepository {
     }
     return savingMoney;
   }
-  // AddMoneyInfo ここまで
 }
