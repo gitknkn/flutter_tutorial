@@ -60,8 +60,11 @@ class TargetMoneyForm extends ConsumerWidget {
             labelText: '目標金額',
           ),
           validator: (value) {
-            final intValue = int.tryParse(value);
-            return intValue == null ? '目標金額を数字で入力して下さい' : null;
+            if (int.tryParse(value) == null || value.isEmpty) {
+              return '目標金額を数字で入力して下さい';
+            } else {
+              return null;
+            }
           },
         ),
       ),

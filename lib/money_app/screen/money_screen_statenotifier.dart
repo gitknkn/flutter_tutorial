@@ -22,6 +22,9 @@ class MoneyInfoScreenStateNotifier extends StateNotifier<MoneyInfoState> {
     state = state.copyWith(isLoading: true);
     await _repository.createTargetMoneyInfoData(data);
     loadTargetMoneyInfoData();
+    getTotalAddMoneyData();
+    getDifferenceMoney();
+    isShowDialogMessage();
   }
 
   loadTargetMoneyInfoData() async {
